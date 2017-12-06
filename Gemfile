@@ -1,3 +1,6 @@
+# note that all the Gems defined here will be automatically required with the
+# Rails application so no need to type `require 'x'`
+
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|

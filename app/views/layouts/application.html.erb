@@ -9,6 +9,23 @@
   </head>
 
   <body>
+    <a href="/">Home</a>
+    |
+    <!-- <a href="/about">About Us</a> -->
+    <%# <a href="<% about_path %><%# ">About Us</a><!--here is the same above, but it's a best practice pattern -->
+    <%# the line below is recommended to use instead of the two above. link_to
+    is a Rails built-in view helper that generates an <a> HTML tag. The
+    first argument for the `link_to` method is the anchor text, the second
+    argument is the URL. If you're linking internally then it's best to
+    use URL helpers such as `about_path`
+    %>
+    <%= link_to 'About Us', about_path %>
+    <%#= link_to('About Us', about_path, { id: 'abc', class: 'xyz' }) %>
+    <%#= link_to('About Us', about_url, { id: 'abc', class: 'xyz' }) <----- recommended for local links, not for external %>
+    <%#= link_to 'About Us', about_path, id: 'abc', class: 'xyz' <----- the same above, ruby is more flexible  %>
+    |
+    <%= link_to 'Contact Us', contact_path %>
+    <hr>
     <%= yield %>
   </body>
 </html>
