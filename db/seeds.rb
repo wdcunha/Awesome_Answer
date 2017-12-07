@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Question.destroy_all
+
+100.times do
+  Question.create(
+    title: Faker::Seinfeld.quote,
+    body: Faker::HitchhikersGuideToTheGalaxy.quote,
+    view_count: rand(1..1000)
+  )
+end
+
+questions = Question.all
+
+puts Cowsay.say("Created #{questions.count} questions", :ghostbusters)
