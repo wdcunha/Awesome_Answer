@@ -26,6 +26,31 @@ class Question < ApplicationRecord
     # of a method inside of your model (whatever name you want).
     # This method will be run during the validation phase and if it adds
     # any error to the model instance it will fail the validation.
+
+    after_initialize :set_defaults
+    before_save :squeeze
+
+    scope :order_by, -> (field, direction) {
+      title({field.to_sym => direction.to_sym})
+      # title({:column => :direction})
+      # title({column: :direction})
+      # title(column: :direction)
+    }
+    scope :search, -> (title, body) {
+      where("title ILIKE '%#{title}%' or body ILIKE '%#{body}%'")
+    }
+
+    private
+
+    def squeeze
+      self.title.squeeze!(' ')
+    end
+
+    private
+    def set_defaults
+      self.title ||= "Placeholder"
+    end
+
     validate :no_monkey
 
     private

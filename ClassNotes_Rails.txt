@@ -97,3 +97,16 @@ on pry,
    "Body is too short (minimum is 5 characters)",
    "View count is not a number",
    "Title should not have a monkey! ð\u009F\u0099\u0088"]
+
+
+   [3] pry(main)> q2 = Question.new({title: "a   "})
+
+
+#### callbacks
+http://api.rubyonrails.org/
+
+
+
+
+
+# bump
