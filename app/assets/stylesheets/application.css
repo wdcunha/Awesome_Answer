@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+html {
+  font-family: Helvetica,sans-serif;
+}
+
+* {
+  font-family: inherit;
+}
+
+.question-list-item {
+  margin-bottom: 0.5rem;
+}

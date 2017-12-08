@@ -4,7 +4,7 @@ class ContactController < ApplicationController
   end
 
   def create
-  @name = params[:name]
-  @message = params[:message]
-end
+    @name = params[:name]
+    @message = params[:message]
+  end
 end

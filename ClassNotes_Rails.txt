@@ -1,9 +1,16 @@
+
+
 gem install rails --nod-rdoc --no-ri
 
 atom ~/.railsrc
 
 
 http://localhost:3000/rails/info/routes
+>>>rails routes (type this to show routes on terminal)
+app.home_path
+app.about_path
+app.new_question_path
+app.about_url
 
 >>> atom ~/railsrc: (put the lines below inside railsrc)
 -T
@@ -21,8 +28,20 @@ http://localhost:3000/rails/info/routes
 2) check if it will have a own git repo, if not, delete .git
 3) rails g model question title body:text
 4) rails db:migrate
-5) rails g migration add_view_count_to_questions  view_count:integer
-6) rails db:migrate
+5) rails g controller question
+6) create function at controller(s)
+7) create erb files
+5) rails s  (runs the server)
+9) edit file new in view
+10) add the option for the nav in application.html.erb inside (layouts)
+11) implement in routes file an option for new
+
+
+rails db:migrate
+rails g migration add_view_count_to_questions  view_count:integer
+
+****rails g controller question --no-helper --no-assets
+create controller with less options inside assets folder
 
 >>> change gem file:
 gem 'faker', github: 'stympy/faker' (isoleted in general lines)
@@ -104,6 +123,20 @@ on pry,
 
 #### callbacks
 http://api.rubyonrails.org/
+
+form_tag  ---> simple form with pure html
+form_for  ---> specific to work with model
+
+q = Question.new
+q2 = Question.last
+
+[3] pry(main)> q.persisted?
+=> false
+[4] pry(main)> q2.persisted?
+=> true
+
+
+
 
 
 

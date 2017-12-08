@@ -48,10 +48,11 @@ class Question < ApplicationRecord
 
     private
     def set_defaults
-      self.title ||= "Placeholder"
+      # self.title ||= "Placeholder"
     end
 
     validate :no_monkey
+    before_validation :set_view_count
 
     private
     def no_monkey
@@ -63,6 +64,14 @@ class Question < ApplicationRecord
         errors.add(:body, "should not have a monkey! ð")
       end
     end
+
+    def set_view_count
+     # When referring to attributes of a class (or class instance), we must
+     # use `self.` only when writing to that attribute. When reading, `self.`
+     # can be optionally omitted.
+     self.view_count ||= 0
+    end
+
   end
 
 
