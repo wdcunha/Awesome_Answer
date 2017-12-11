@@ -1,4 +1,39 @@
 class Question < ApplicationRecord
+
+  # Like `belongs_to`, `has_many` tells Rails that Question is associated to the
+  # Answer model.
+  # It implies that the model where `has_many` is defined doesn't have the
+  # the foreign_key (i.e. question_id) meaning that the `answers` has
+  # the `question_id`.
+  has_many :answers, dependent: :destroy #if there's some dependece, destroy all of this
+  # `dependent: :destroy` will cause all associated answers to be destroyed
+  # when the associated is destroyed.
+
+  # `dependent: :nullify` will cause all associated answers to no longuer
+  # associated before a question is destrored. In other words, their
+  # `question_id` column will be set to `NULL`.
+
+  # `has_many :answers` will add the following instance methods to the
+  # the Question model:
+
+  # answers
+  # answers<<(object, ...)
+  # answers.delete(object, ...)
+  # answers.destroy(object, ...)
+  # answers=(objects)
+  # answer_ids
+  # answer_ids=(ids)
+  # answers.clear
+  # answers.empty?
+  # answers.size
+  # answers.find(...)
+  # answers.where(...)
+  # answers.exists?(...)
+  # answers.build(attributes = {}, ...)
+  # answers.create(attributes = {})
+  # answers.create!(attributes = {})
+  # answers.reload
+
   # We can define validations here that'll be checked before a model is saved
   # to the database. If any of the rules fail, ActiveRecord will prevent saving
   # it by doing a rollback and will also add error message to the model instance.

@@ -3,8 +3,11 @@
 <p><%= @question.body %></p>
 
 <p><strong>View Count:</strong> <%= @question.view_count %></p>
-<p><strong>Created At:</strong> <%= @question.created_at %></p>
-<p><strong>Update At:</strong> <%= @question.updated_at %></p>
+<!-- <p><strong>Created At:</strong> <%= @question.created_at %></p>
+<p><strong>Update At:</strong> <%= @question.updated_at %></p> -->
+<p><strong>Created At:</strong> <%= time_ago_in_words(@question.created_at) %> ago</p>
+<p><strong>Update At:</strong> <%= time_ago_in_words(@question.updated_at) %> ago</p>
+
 
 <%= link_to 'Edit', edit_question_path(@question) %>
 
@@ -16,3 +19,54 @@
     data: {confirm: 'Are you sure?'}
   )
 %>
+
+<h2>Answers</h2>
+
+<%# If we want to create a form for a model that is nested
+    that belongs_to another model, we must give `form_for`
+    both models in an array as its first argument where
+    the first of element of the array is the model instance
+    that the second element belongs to.
+%>
+
+
+<%= form_for [@question, @answer] do |f| %>
+  <% if @answer.errors.present? %>
+    <p>
+      <%= @answer.errors.full_messages.join(', ') %>
+    </p>
+  <% end %>
+
+  <div>
+    <%= f.text_area :body %>
+  </div>
+
+  <%= f.submit %>
+<% end %>
+
+<div class="answer-list">
+    <% @answers.each do |answer| %>
+      <div class="answer-list-item">
+        <p><%= answer.body %></p>
+        <p>
+          <strong>Created At:</strong>
+          <%= time_ago_in_words(answer.created_at) %> ago
+        </p>
+        <%= link_to(
+          'Delete',
+          question_answer_path(@question, answer),
+          data: {confirm: 'Are you sure?'},
+          method: :delete
+        ) %>
+      </div>
+    <% end %>
+</div>
+
+
+
+
+
+
+
+
+<%# %>

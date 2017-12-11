@@ -26,9 +26,10 @@ app.about_url
 1) rails new project_name
    rails new project_name -T -d postgresql  (if need db - use Postgres as our database instead of the default one: SQLite)
 2) check if it will have a own git repo, if not, delete .git
-3) rails g model question title body:text
-4) rails db:migrate
-5) rails g controller question
+3) rails g model product title body:text
+4) rails db:create and
+   rails db:migrate
+5) rails g controller question --no-helper --no-assets
 6) create function at controller(s)
 7) create erb files
 5) rails s  (runs the server)
@@ -39,9 +40,14 @@ app.about_url
 
 rails db:migrate
 rails g migration add_view_count_to_questions  view_count:integer
+rails g migration ChangePriceInProducts
+https://codequizzes.wordpress.com/2013/06/06/rails-migrations-to-add-a-column-and-change-column-type/
+
 
 ****rails g controller question --no-helper --no-assets
 create controller with less options inside assets folder
+
+### database.yml ---> this is the file where the project keeps the name of DB
 
 >>> change gem file:
 gem 'faker', github: 'stympy/faker' (isoleted in general lines)
@@ -136,8 +142,136 @@ q2 = Question.last
 => true
 
 
+>>>> rails g model answer body:text question:references ---> creates dependence between lines
+
+pry(main)> a = Answer.new(body: 'Carrot', question: Question.all.sample)
+Question Load (29.6ms)  SELECT "questions".* FROM "questions"
++----+--------+-------------+------------+------------+
+| id | body   | question_id | created_at | updated_at |
++----+--------+-------------+------------+------------+
+|    | Carrot | 10          |            |            |
++----+--------+-------------+------------+------------+
+
+pry(main)> a.save
+   (0.5ms)  BEGIN
+  SQL (1.1ms)  INSERT INTO "answers" ("body", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["body", "Carrot"], ["question_id", 10], ["created_at", "2017-12-11 17:37:38.167505"], ["updated_at", "2017-12-11 17:37:38.167505"]]
+   (3.6ms)  COMMIT
+=> true
+
+a.create_question(title: 'What is this!?', body: 'asdjfalsdjflajdfla')
+a.save
+
+pry(main)> Answer.all
 
 
+**** when we use << (sheval) it doesn't change anything in db, but when we use = it will
+replace data in db
+
+pry(main)> q.answers << Answer.new(body: 'Lemon Pie')
+   (0.4ms)  BEGIN
+  SQL (0.8ms)  INSERT INTO "answers" ("body", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["body", "Lemon Pie"], ["question_id", 15], ["created_at", "2017-12-11 18:05:51.432424"], ["updated_at", "2017-12-11 18:05:51.432424"]]
+   (18.1ms)  COMMIT
++----+------------+-------------+-----------------+------------------+
+| id | body       | question_id | created_at      | updated_at       |
++----+------------+-------------+-----------------+------------------+
+| 3  | Carot cake | 15          | 2017-12-11 1... | 2017-12-11 18... |
+| 4  | Lemon Pie  | 15          | 2017-12-11 1... | 2017-12-11 18... |
++----+------------+-------------+-----------------+------------------+
+2 rows in set
+[20] pry(main)> q.answer_ids
+=> [3, 4]
+[21] pry(main)> q.answer_ids = [1,2,3]
+  Answer Load (1.2ms)  SELECT "answers".* FROM "answers" WHERE "answers"."id" IN (1, 2, 3)
+   (0.4ms)  BEGIN
+  SQL (1.0ms)  UPDATE "answers" SET "question_id" = NULL WHERE "answers"."question_id" = $1 AND "answers"."id" = 4  [["question_id", 15]]
+  SQL (4.9ms)  UPDATE "answers" SET "question_id" = $1, "updated_at" = $2 WHERE "answers"."id" = $3  [["question_id", 15], ["updated_at", "2017-12-11 18:10:43.019053"], ["id", 1]]
+  SQL (2.1ms)  UPDATE "answers" SET "question_id" = $1, "updated_at" = $2 WHERE "answers"."id" = $3  [["question_id", 15], ["updated_at", "2017-12-11 18:10:43.033553"], ["id", 2]]
+   (4.2ms)  COMMIT
+=> [1, 2, 3]
+
+[23] pry(main)> q.answers
++----+------------+-------------+-----------------+------------------+
+| id | body       | question_id | created_at      | updated_at       |
++----+------------+-------------+-----------------+------------------+
+| 3  | Carot cake | 15          | 2017-12-11 1... | 2017-12-11 18... |
+| 1  | Stuf       | 15          | 2017-12-11 1... | 2017-12-11 18... |
+| 2  | Carrot     | 15          | 2017-12-11 1... | 2017-12-11 18... |
++----+------------+-------------+-----------------+------------------+
+3 rows in set
+
+
+pry(main)> q.answers = [Answer.first, Answer.last]
+  Answer Load (0.8ms)  SELECT  "answers".* FROM "answers" ORDER BY "answers"."id" ASC LIMIT $1  [["LIMIT", 1]]
+  Answer Load (0.6ms)  SELECT  "answers".* FROM "answers" ORDER BY "answers"."id" DESC LIMIT $1  [["LIMIT", 1]]
+   (0.4ms)  BEGIN
+  SQL (1.3ms)  UPDATE "answers" SET "question_id" = NULL WHERE "answers"."question_id" = $1 AND "answers"."id" IN (3, 2)  [["question_id", 15]]
+  SQL (0.7ms)  UPDATE "answers" SET "question_id" = $1, "updated_at" = $2 WHERE "answers"."id" = $3  [["question_id", 15], ["updated_at", "2017-12-11 18:12:01.191601"], ["id", 4]]
+   (6.3ms)  COMMIT
++----+-----------+-------------+------------------+------------------+
+| id | body      | question_id | created_at       | updated_at       |
++----+-----------+-------------+------------------+------------------+
+| 1  | Stuf      | 15          | 2017-12-11 17... | 2017-12-11 18... |
+| 4  | Lemon Pie | 15          | 2017-12-11 18... | 2017-12-11 18... |
++----+-----------+-------------+------------------+------------------+
+2 rows in set
+
+pry(main)> Answers.all
+NameError: uninitialized constant Answers
+from (pry):26:in `__pry__'
+[26] pry(main)> Answer.all
+  Answer Load (0.7ms)  SELECT "answers".* FROM "answers"
++----+------------+-------------+-----------------+------------------+
+| id | body       | question_id | created_at      | updated_at       |
++----+------------+-------------+-----------------+------------------+
+| 1  | Stuf       | 15          | 2017-12-11 1... | 2017-12-11 18... |
+| 3  | Carot cake |             | 2017-12-11 1... | 2017-12-11 18... |
+| 2  | Carrot     |             | 2017-12-11 1... | 2017-12-11 18... |
+| 4  | Lemon Pie  | 15          | 2017-12-11 1... | 2017-12-11 18... |
++----+------------+-------------+-----------------+------------------+
+4 rows in set
+
+pry(main)> q.answers.empty?
+=> false
+[28] pry(main)> q.answers.exists?
+ Answer Exists (0.8ms)  SELECT  1 AS one FROM "answers" WHERE "answers"."question_id" = $1 LIMIT $2  [["question_id", 15], ["LIMIT", 1]]
+=> true
+[29] pry(main)> q.answers.exists?(id:6)
+ Answer Exists (0.8ms)  SELECT  1 AS one FROM "answers" WHERE "answers"."question_id" = $1 AND "answers"."id" = $2 LIMIT $3  [["question_id", 15], ["id", 6], ["LIMIT", 1]]
+=> false
+
+pry(main)> q.answers.where('body ILIKE ?', '%Lemon%')
+  Answer Load (0.9ms)  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1 AND (body ILIKE '%Lemon%')  [["question_id", 15]]
++----+-----------+-------------+------------------+------------------+
+| id | body      | question_id | created_at       | updated_at       |
++----+-----------+-------------+------------------+------------------+
+| 4  | Lemon Pie | 15          | 2017-12-11 18... | 2017-12-11 18... |
++----+-----------+-------------+------------------+------------------+
+1 row in set
+
+**** baing gives a error, validate rule while without it, not
+pry(main)> q.answers.create!()
+   (0.3ms)  BEGIN
+   (0.6ms)  ROLLBACK
+ActiveRecord::RecordInvalid: Validation failed: Body can't be blank
+from /home/wellington/.rvm/gems/ruby-2.4.2/gems/activerecord-5.1.4/lib/active_record/validations.rb:78:in `raise_validation_error'
+[37] pry(main)> q.answers.create()
+   (0.5ms)  BEGIN
+   (0.5ms)  COMMIT
++----+------+-------------+------------+------------+
+| id | body | question_id | created_at | updated_at |
++----+------+-------------+------------+------------+
+|    |      | 109         |            |            |
++----+------+-------------+------------+------------+
+1 row in set
+
+
+rails g controller answers --no-assets --no-helper
+Running via Spring preloader in process 8134
+      create  app/controllers/answers_controller.rb
+      invoke  erb
+      create    app/views/answers
+      invoke  test_unit
+      create    test/controllers/answers_controller_test.rb
 
 
 

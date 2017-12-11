@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
   # Public methods in Controllers are called `actions`.
   # They are used to get data from models and show
   # views to the users.
@@ -35,22 +36,20 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find params[:id]
     # Implement view count feature. It should increment the view_count
     # column anytime a question is viewed
     @question.update(view_count: @question.view_count + 1)
     # Alternate:
     # @question.view_count += 1
     # @question.save
+    @answers = @question.answers.order(created_at: :desc)
+    @answer = Answer.new
   end
 
   def edit
-    @question = Question.find params[:id]
   end
 
   def update
-    @question = Question.find params[:id]
-
     if @question.update(question_params)
       redirect_to question_path(@question)
     else
@@ -59,7 +58,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question = Question.find params[:id]
     @question.destroy
 
     redirect_to questions_path
@@ -68,6 +66,10 @@ class QuestionsController < ApplicationController
   private
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def find_question
+    @question = Question.find params[:id]
   end
 end
 
