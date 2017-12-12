@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question
 
   def create
@@ -6,6 +7,7 @@ class AnswersController < ApplicationController
     @answer.question = @question
     # ð alternate to ð provided by `has_many :answers`
     # @answer = @question.answers.build(answer_params)
+    @answer.user = current_user
 
     if @answer.save
       redirect_to question_path(@question)

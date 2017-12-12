@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # session related routes
+  # different of answer, we have just one session per user
+  #
+  resource :session, only: [:new, :create, :destroy]
+
+  # User related routes
+   resources :users, only: [:new, :create]
+
   # Question related routes
+
 
   resources :questions  do
     resources :answers, only: [:create, :destroy]

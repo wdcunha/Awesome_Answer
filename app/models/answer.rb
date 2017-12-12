@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  belongs_to :user
+  
   # When the Answer model was generated, the option `question:references`
   # added the line to this model.
   # This means that in the relationship between Answer <> Question the
@@ -20,5 +22,5 @@ class Answer < ApplicationRecord
   # reload_question
 
   validates :body, presence: true
-  
+
 end

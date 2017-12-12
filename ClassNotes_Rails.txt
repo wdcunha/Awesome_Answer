@@ -25,11 +25,11 @@ app.about_url
 
 1) rails new project_name
    rails new project_name -T -d postgresql  (if need db - use Postgres as our database instead of the default one: SQLite)
-2) check if it will have a own git repo, if not, delete .git
+2) check if it has a own git repo, if not, delete .git
+5) rails g controller question --no-helper --no-assets
 3) rails g model product title body:text
 4) rails db:create and
    rails db:migrate
-5) rails g controller question --no-helper --no-assets
 6) create function at controller(s)
 7) create erb files
 5) rails s  (runs the server)
@@ -40,6 +40,7 @@ app.about_url
 
 rails db:migrate
 rails g migration add_view_count_to_questions  view_count:integer
+rails g migration add_last_name_to_users  last_name:string
 rails g migration ChangePriceInProducts
 https://codequizzes.wordpress.com/2013/06/06/rails-migrations-to-add-a-column-and-change-column-type/
 
@@ -275,5 +276,139 @@ Running via Spring preloader in process 8134
 
 
 
+>>>>> Authentication ----> it will generate a create_users file
+1)    rails g model user first_name email password_digest
+      Running via Spring preloader in process 28318
+            invoke  active_record
+            create    db/migrate/20171212171017_create_users.rb
+            create    app/models/user.rb
+            invoke    test_unit
+            create      test/models/user_test.rb
+            create      test/fixtures/users.yml
+
+2) Edit migration file
+   t.string :email, index: {unique: true}
+3) rails db:migrate
+   now it's possible an user at the db:
+   pry(main)> User.all
+  User Load (1.1ms)  SELECT "users".* FROM "users"
+=> []
+
+4) Gemfile  ---> uncomment the line gem 'bcrypt'
+  https://github.com/codahale/bcrypt-ruby
+  pry(main)> password = BCrypt::Password.create('why')
+  => "$2a$10$5ueJGgBPjMPNPo9fzZ/CnObAKIaFR8OXYSmxqPVd.u2tFLqTQ4bgq"
+  [7] pry(main)> password === "why"
+  => false
+  [8] pry(main)> password == "why"
+  => true
+  [9] pry(main)> password == "wh"
+  => false
+5) bundle ---> to apply the edition at Gemfile
+6) Call has_secure_password in User Model
+   we call this method in the User model
+   pry(main)> u1 = User.new first_name: 'jane', email: 'j@j.ca'
++----+------------+--------+---------------+------------+------------+
+| id | first_name | email  | password_d... | created_at | updated_at |
++----+------------+--------+---------------+------------+------------+
+|    | jane       | j@j.ca |               |            |            |
++----+------------+--------+---------------+------------+------------+
+1 row in set
+[14] pry(main)> u1.password = 'supersecret'
+=> "supersecret"
+[15] pry(main)> u1.password_confirmation = 's'
+=> "s"
+[16] pry(main)> u1.save
+   (0.3ms)  BEGIN
+   (0.4ms)  ROLLBACK
+=> false
+[17] pry(main)> u1.errors.full_messages
+=> ["Password confirmation doesn't match Password"]
+
+7) Validate file user.rb for format of fields
+https://regexone.com/
+
+8) Can seed ---> some lines to see sth
+
+9) Create a controller
+    rails g controller users --no-assets --no-helper
+
+10) Time to create web pages
+    insert lines in application.html for showing message after loggin and user logged
+11) Edit(insert lines) ApplicationController
+    it check if the user already exists
+    Add lines inside if of save about session
+
+12) create session
+    rails g controller sessions --no-assets --no-helper
+Running via Spring preloader in process 434
+  create  app/controllers/sessions_controller.rb
+  invoke  erb
+  create    app/views/sessions
+  invoke  test_unit
+  create    test/controllers/sessions_controller_test.rb
+
+13) create route (resources) for session
+14) create pages for session
+    new.html
+15) SessionsController
+    *def create
+    *application.ht
+    *need to put before_action in each controller we need to control
+
+16)
+rails g migration add_user_to_questions user:references
+Running via Spring preloader in process 2846
+      invoke  active_record
+      create    db/migrate/20171212194903_add_user_to_questions.rb
+      rails g migration add_user_to_answers user:references
+      Running via Spring preloader in process 2864
+            invoke  active_record
+            create    db/migrate/20171212194928_add_user_to_answers.rb
+17) migration file to edit
+18) rails db:migrate
+19) add belongs_to for models
+    * for user model, insert has_many
+    *used seed to add users for both tables
+    *edited show.html from questions including user
+    *add a method in user.rb for full_name
+    *at show.html
+    *inserted & that checks if the field fis nil and [deleted]
+    * add line in question and aswer controller in def create     @question.user = current_user
+    * on show.html page in questions the line below in answer-list
+    <p>By <%= @question.user&.full_name || "[deleted]" %></p>
+    * it was needed to restart using rails s
+
+20) run rails db:seed
+
+
+    pry(main)> a = "Bob"
+    => "Bob"
+    [2] pry(main)> a.concat("Test")
+    => "BobTest"
+    [3] pry(main)> a = nil
+    => nil
+    [4] pry(main)> a.concat("Test")
+    NoMethodError: undefined method `concat' for nil:NilClass
+    from (pry):4:in `__pry__'
+    [5] pry(main)> a.concat("Test") if a.present?
+    => nil
+    [6] pry(main)> a = adkjfakd
+    NameError: undefined local variable or method `adkjfakd' for main:Object
+    from (pry):6:in `__pry__'
+    [7] pry(main)> a = 'adkjfakd'
+    => "adkjfakd"
+    [8] pry(main)> a.concat("Test") if a.present?
+    => "adkjfakdTest"
+    [9] pry(main)> a && a.concat("Test")
+    => "adkjfakdTestTest"
+    [10] pry(main)> a=nil
+    => nil
+    [11] pry(main)> a&.concat("Test")
+    => nil
+    [12] pry(main)> a='sth'
+    => "sth"
+    [13] pry(main)> a&.concat("Test")
+    => "sthTest"
 
 # bump

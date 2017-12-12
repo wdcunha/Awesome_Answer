@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:show, :index]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
   # Public methods in Controllers are called `actions`.
   # They are used to get data from models and show
@@ -22,6 +23,8 @@ class QuestionsController < ApplicationController
     # instance variables. That is prefix `@` in front of their name. Local
     # variables are inaccessible inside views.
     @question = Question.new question_params
+    # @question.user_id = current_user
+    @question.user = current_user
 
     # With the gem `pry` installed, you can use the `binding.pry` command
     # to stop a program at that line and open it in a `pry` console. This very

@@ -29,8 +29,30 @@
     <%#= link_to('About Us', about_url, { id: 'abc', class: 'xyz' }) <----- recommended for local links, not for external %>
     <%#= link_to 'About Us', about_path, id: 'abc', class: 'xyz' <----- the same above, ruby is more flexible  %>
     |
-    <%= link_to 'Contact Us', contact_path %>
-    <hr>
+    <% if user_signed_in? %>
+      <span>Hello, <%= current_user.first_name %>!</span>
+    |
+      <%= link_to(
+        'Sign Out',
+        session_path,
+        method: :delete,
+        data: {confirm: 'Do you really want to sign out?'}
+      ) %>
+    <% else %>
+      <%= link_to 'Sign In', new_session_path %>
+    |
+      <%= link_to 'Sign Up', new_user_path %>
+    <% end %>
+        <hr>
+
+
+            <% if flash[:notice].present? || flash[:alert].present? %>
+              <div class="flash-message">
+                <p><%= flash[:notice] || flash[:alert] %></p>
+              </div>
+            <% end %>
+
+
     <%= yield %>
   </body>
 </html>

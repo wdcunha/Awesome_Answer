@@ -2,6 +2,8 @@
 
 <p><%= @question.body %></p>
 
+<p>By <%= @question.user&.full_name || "[deleted]" %></p>
+
 <p><strong>View Count:</strong> <%= @question.view_count %></p>
 <!-- <p><strong>Created At:</strong> <%= @question.created_at %></p>
 <p><strong>Update At:</strong> <%= @question.updated_at %></p> -->
@@ -48,6 +50,7 @@
     <% @answers.each do |answer| %>
       <div class="answer-list-item">
         <p><%= answer.body %></p>
+        <p>By <%= @question.user&.full_name || "[deleted]" %></p>
         <p>
           <strong>Created At:</strong>
           <%= time_ago_in_words(answer.created_at) %> ago

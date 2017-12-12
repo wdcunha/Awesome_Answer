@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-
+  belongs_to :user
   # Like `belongs_to`, `has_many` tells Rails that Question is associated to the
   # Answer model.
   # It implies that the model where `has_many` is defined doesn't have the
