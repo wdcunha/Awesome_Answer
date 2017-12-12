@@ -50,7 +50,7 @@ create controller with less options inside assets folder
 ### database.yml ---> this is the file where the project keeps the name of DB
 
 >>> change gem file:
-gem 'faker', github: 'stympy/faker' (isoleted in general lines)
+gem 'faker', github: 'stympy/faker' (isolated in general lines)
 
 
 gem 'pg'  (instead of sqlite3)
