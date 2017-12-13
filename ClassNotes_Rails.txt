@@ -277,7 +277,7 @@ Running via Spring preloader in process 8134
 
 
 >>>>> Authentication ----> it will generate a create_users file
-1)    rails g model user first_name email password_digest
+1)    rails g model user first_name last_name email password_digest
       Running via Spring preloader in process 28318
             invoke  active_record
             create    db/migrate/20171212171017_create_users.rb
@@ -289,7 +289,7 @@ Running via Spring preloader in process 8134
 2) Edit migration file
    t.string :email, index: {unique: true}
 3) rails db:migrate
-   now it's possible an user at the db:
+   now it's possible to add user to the db:
    pry(main)> User.all
   User Load (1.1ms)  SELECT "users".* FROM "users"
 => []
@@ -332,7 +332,7 @@ https://regexone.com/
 
 9) Create a controller
     rails g controller users --no-assets --no-helper
-
+    *insert actions
 10) Time to create web pages
     insert lines in application.html for showing message after loggin and user logged
 11) Edit(insert lines) ApplicationController
@@ -358,6 +358,8 @@ Running via Spring preloader in process 434
 
 16)
 rails g migration add_user_to_questions user:references
+rails g migration add_user_to_products user:references
+rails g migration add_user_to_reviews user:references
 Running via Spring preloader in process 2846
       invoke  active_record
       create    db/migrate/20171212194903_add_user_to_questions.rb
@@ -367,14 +369,14 @@ Running via Spring preloader in process 2846
             create    db/migrate/20171212194928_add_user_to_answers.rb
 17) migration file to edit
 18) rails db:migrate
-19) add belongs_to for models
+19) add belongs_to :user for models
     * for user model, insert has_many
     *used seed to add users for both tables
-    *edited show.html from questions including user
+    *edited show.html of questions including user
     *add a method in user.rb for full_name
     *at show.html
     *inserted & that checks if the field fis nil and [deleted]
-    * add line in question and aswer controller in def create     @question.user = current_user
+    * add line in question and answer controller in def create     @question.user = current_user
     * on show.html page in questions the line below in answer-list
     <p>By <%= @question.user&.full_name || "[deleted]" %></p>
     * it was needed to restart using rails s
