@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
   # Public methods in Controllers are called `actions`.
   # They are used to get data from models and show
   # views to the users.
@@ -32,7 +33,12 @@ class QuestionsController < ApplicationController
     # binding.pry
 
     if @question.save
-      redirect_to home_path
+      # redirect_to home_path
+
+      # `redirect_to` can also take a model instance as an argument.
+      # When it gets a model instance, it will redirect the user to its
+      # show page which requires that the relevant route is defined.
+      redirect_to @question
     else
       render :new
     end
@@ -74,8 +80,18 @@ class QuestionsController < ApplicationController
   def find_question
     @question = Question.find params[:id]
   end
-end
 
+
+  def authorize_user!
+    # When using cancancan methods like `can?`, it knows
+    # the logged in user as long as the method `current_user`
+    # is defined for controllers.
+    unless can?(:manage, @question)
+      flash[:alert] = "Access Denied!"
+      redirect_to home_path
+    end
+  end
+end
 
 
 

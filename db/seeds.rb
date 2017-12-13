@@ -15,8 +15,9 @@ User.destroy_all
 super_user = User.create(
   first_name: 'Jon',
   last_name: 'Snow',
-  email: 'js@winterfell.gov',
   password: PASSWORD
+  email: 'js@winterfell.gov',
+  is_admin: true
 )
 
 10.times.each do
@@ -65,3 +66,5 @@ answers = Answer.all
 puts Cowsay.say("Create #{answers.count} answers", :moose)
 
 puts "Login with #{super_user.email} and password of '#{PASSWORD}'!"
+
+puts "Login as admin with #{super_user.email} and password of '#{PASSWORD}'!"

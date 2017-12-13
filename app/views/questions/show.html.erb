@@ -10,17 +10,18 @@
 <p><strong>Created At:</strong> <%= time_ago_in_words(@question.created_at) %> ago</p>
 <p><strong>Update At:</strong> <%= time_ago_in_words(@question.updated_at) %> ago</p>
 
+<% if can?(:manage, @question) %>
+  <%= link_to 'Edit', edit_question_path(@question) %>
 
-<%= link_to 'Edit', edit_question_path(@question) %>
-
-<%=
-  link_to(
-    'Delete',
-    question_path(@question),
-    method: :delete,
-    data: {confirm: 'Are you sure?'}
-  )
-%>
+  <%=
+    link_to(
+      'Delete',
+      question_path(@question),
+      method: :delete,
+      data: {confirm: 'Are you sure?'}
+    )
+  %>
+<% end %>
 
 <h2>Answers</h2>
 

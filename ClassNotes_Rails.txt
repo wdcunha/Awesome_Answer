@@ -40,6 +40,7 @@ app.about_url
 
 rails db:migrate
 rails g migration add_view_count_to_questions  view_count:integer
+rails g migration add_view_count_to_questions  view_count:integer
 rails g migration add_last_name_to_users  last_name:string
 rails g migration ChangePriceInProducts
 https://codequizzes.wordpress.com/2013/06/06/rails-migrations-to-add-a-column-and-change-column-type/
@@ -412,5 +413,79 @@ Running via Spring preloader in process 2846
     => "sth"
     [13] pry(main)> a&.concat("Test")
     => "sthTest"
+
+
+>>>>>>>>
+https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_06/deploying_to_heroku.md
+https://github.com/CanCanCommunity/cancancan
+
+1) gem 'cancancan' ----> put inside Gemfile
+2) rails g cancan:ability
+3) can :manage, Question do |question| ----> put inside ability.rb (model)
+   *manage allow everything related of CRUD
+   *need the user set up or won't work
+   *uncomment line 10 about 'user ||='
+   *include the line user == question.user
+4) Add if statment in show.html before edit or where we need it
+   if can?(:manage, @question)
+5) question_controller to make rule to control this use
+   * include def authorize_user  (it needs to be after find --- order matters)
+   * include before_action
+   * add line binding.pry
+6) answers_controller put the same above
+7) insert if in show.html from answer view
+8) rails g migration add_is_admin_to_user is_admin:boolean
+9) seeds --- added is_admin: true
+  puts "Login as admin with #{super_user.email} and password of '#{PASSWORD}'!"
+10) ability.rb uncomment if in line 11 putting is inside:
+    user.is_admin?
+    *above is the line done inside pry
+11) rails g controller Admin::Dashboard --no-assets --no-helper
+    * it is created Dashboard_controller inside subdirectory Admin
+    *
+12) routes use the namespace....put it inside
+13) create an view for dashboard
+14) add function inside dashboard_controller and before_action
+15) add if inside application.html below about us
+
+
+
+
+pry(main)> u = User.first
+ User Load (1.1ms)  SELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
++----+--------+--------+--------+--------+---------+--------+--------+
+| id | fir... | email  | pas... | cre... | upda... | las... | is_... |
++----+--------+--------+--------+--------+---------+--------+--------+
+| 27 | Jon    | js@... | $2a... | 201... | 2017... | Snow   | false  |
++----+--------+--------+--------+--------+---------+--------+--------+
+1 row in set
+[2] pry(main)> u.is_admin = true
+=> true
+[3] pry(main)> u.save
+  (0.3ms)  BEGIN
+ User Exists (1.3ms)  SELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3  [["email", "js@winterfell.gov"], ["id", 27], ["LIMIT", 1]]
+ SQL (0.9ms)  UPDATE "users" SET "updated_at" = $1, "is_admin" = $2 WHERE "users"."id" = $3  [["updated_at", "2017-12-13 18:15:23.297895"], ["is_admin", "t"], ["id", 27]]
+  (4.6ms)  COMMIT
+=> true
+
+>>>>>  Bootstrap  ----> it's important when updating, Gemfile will it for us
+http://sass-lang.com/
+https://github.com/twbs/bootstrap-rubygem
+
+1) add lines in Gemfile:
+  gem 'jquery-rails'
+  gem 'bootstrap'
+  bundle
+2) go to assets\javascripts folder and add some lines, what Gem will be responsible to update for us:
+  //= require jquery3
+  //= require popper
+  //= require bootstrap
+
+
+*** bundle info jquery-rails (to see where is the folder)
+
+>>>>> Flash warning
+
+1) changed the lines about flash at application.html
 
 # bump

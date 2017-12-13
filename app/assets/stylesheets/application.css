@@ -24,3 +24,11 @@ html {
 .question-list-item {
   margin-bottom: 0.5rem;
 }
+
+/*
+  The following statement allows us to load scss code from another file.
+  We use it load the bootstrap installed by the gem `bootstrap`. This only
+  works inside .scss files and note regular .css files.
+  For more on SCSS (or SASS) check out, http://sass-lang.com/
+*/
+@import 'bootstrap'

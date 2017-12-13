@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :find_question
+  before_action :authenticate_user!, :find_question
+  # before_action :find_answer, only: [:destroy]
+  before_action :find_answer, :authorize_user!, only: [:destroy]
 
   def create
     @answer = Answer.new(answer_params)
@@ -22,7 +23,6 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find params[:id]
     @answer.destroy
     redirect_to question_path(@question)
   end
@@ -35,4 +35,23 @@ class AnswersController < ApplicationController
   def find_question
     @question = Question.find params[:question_id]
   end
+
+  def find_answer
+    @answer = Answer.find params[:id]
+  end
+
+  def authorize_user!
+    unless can?(:manage, @answer)
+      flash[:alert] = "Access Denied!"
+      redirect_to home_path
+    end
+  end
 end
+
+
+
+
+
+
+
+## bump
