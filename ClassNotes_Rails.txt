@@ -488,4 +488,11 @@ https://github.com/twbs/bootstrap-rubygem
 
 1) changed the lines about flash at application.html
 
+
+>>>>> Heroku
+
+* name of picture needs to have extension
+* heroku run rails db:migrate
+* heroku run rails db:seed (optional)
+
 # bump
