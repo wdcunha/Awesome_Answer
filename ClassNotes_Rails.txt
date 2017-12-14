@@ -420,6 +420,7 @@ https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_06/deploy
 https://github.com/CanCanCommunity/cancancan
 
 1) gem 'cancancan' ----> put inside Gemfile
+   bundle
 2) rails g cancan:ability
 3) can :manage, Question do |question| ----> put inside ability.rb (model)
    *manage allow everything related of CRUD
@@ -431,22 +432,23 @@ https://github.com/CanCanCommunity/cancancan
 5) question_controller to make rule to control this use
    * include def authorize_user  (it needs to be after find --- order matters)
    * include before_action
-   * add line binding.pry
+   * add line binding.pry (just to do some action in pry --- need to delete after using)
 6) answers_controller put the same above
-7) insert if in show.html from answer view
+7) insert if in show.html from answer in the question view
 8) rails g migration add_is_admin_to_user is_admin:boolean
+   rails db:migrate
 9) seeds --- added is_admin: true
   puts "Login as admin with #{super_user.email} and password of '#{PASSWORD}'!"
 10) ability.rb uncomment if in line 11 putting is inside:
     user.is_admin?
-    *above is the line done inside pry
+    *below is the line done inside pry
 11) rails g controller Admin::Dashboard --no-assets --no-helper
     * it is created Dashboard_controller inside subdirectory Admin
-    *
+    * fill out the file generated with a def for index page and a private authorize_admin
 12) routes use the namespace....put it inside
 13) create an view for dashboard
 14) add function inside dashboard_controller and before_action
-15) add if inside application.html below about us
+15) add if inside application.html below contact us
 
 
 
@@ -480,7 +482,8 @@ https://github.com/twbs/bootstrap-rubygem
   //= require jquery3
   //= require popper
   //= require bootstrap
-
+3) rename application.scss
+4) add last line @import 'bootstrap'
 
 *** bundle info jquery-rails (to see where is the folder)
 
@@ -491,8 +494,28 @@ https://github.com/twbs/bootstrap-rubygem
 
 >>>>> Heroku
 
+*
+* sudo add-apt-repository "deb https://cli-assets.heroku.com/branches/stable/apt ./"
+* curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -
+* sudo apt-get update
+* sudo apt-get install heroku
+
+* heroku login
+* heroku apps:create wellish2017
 * name of picture needs to have extension
-* heroku run rails db:migrate
+* git remote -v (first command to send the app for web)
+* git add -A
+* git commit -m 'Preparing for heroku deploy'
+* git push heroku master
+* heroku run rails db:migrate (migrate DB for heroku website)
 * heroku run rails db:seed (optional)
+* heroku logs -t -a wellish2017
+
+
+https://wellamzn.herokuapp.com/
+https://git.heroku.com/wellamzn.git
+
+
+
 
 # bump
