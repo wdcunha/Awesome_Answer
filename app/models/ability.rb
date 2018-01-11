@@ -32,16 +32,34 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
+    # It the `Ability` we define authorization rules, the first argument
+    # is a symbol that represent an ability to do something and the second
+    # argument is the subject. In other words, it's the model that would be
+    # affected by the action.
+    alias_action :create, :read, :update, :destroy, :to => :crud
+
+
     # There a few special names for the first argument such as :manage which
     # groups all :read, :create, :update and :destroy actions. Otherwise, you
     # can define your own names.
-    can :manage, Question do |question|
+    can :crud, Question do |question|
       user == question.user
     end
+
+    # user can like a question is he/she is not the owner of the question
+    can :like, Question do |question|
+      question.user != user
+    end
+
+    can :crud, Like do |like|
+      like.user == user
+    end
+
     # Example usage testing this rule:
     # can?(:manage, @question)
-    can :manage, Answer do |answer|
+    can :crud, Answer do |answer|
       answer.user == user
     end
   end
+
 end

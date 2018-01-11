@@ -11,11 +11,14 @@
   <body>
     <a href="/">Home</a>
     |
-    <%= link_to 'Questions', questions_path %>
-    |
     <%= link_to 'New Question', new_question_path %>
     |
-
+    <%= link_to 'Questions', questions_path %>
+    <% if user_signed_in? %>
+      |
+      <%= link_to 'My Liked Questions', questions_path({liked: true}) %>
+    <% end %>
+    |
     <!-- <a href="/about">About Us</a> -->
     <%# <a href="<% about_path %><%# ">About Us</a><!--here is the same above, but it's a best practice pattern -->
     <%# the line below is recommended to use instead of the two above. link_to
@@ -73,7 +76,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-  <% end %>
+    <% end %>
+  </div>
 
 
     <%= yield %>

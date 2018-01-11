@@ -30,7 +30,7 @@ app.about_url
 3) rails g model product title body:text
 4) rails db:create and
    rails db:migrate
-6) create function at controller(s)
+6) create actions at controller(s)
 7) create erb files
 5) rails s  (runs the server)
 9) edit file new in view
@@ -144,7 +144,8 @@ q2 = Question.last
 => true
 
 
->>>> rails g model answer body:text question:references ---> creates dependence between lines
+>>>> rails g model answer body:text question:references
+      ---> creates dependence between registers
 
 pry(main)> a = Answer.new(body: 'Carrot', question: Question.all.sample)
 Question Load (29.6ms)  SELECT "questions".* FROM "questions"
@@ -267,13 +268,15 @@ from /home/wellington/.rvm/gems/ruby-2.4.2/gems/activerecord-5.1.4/lib/active_re
 1 row in set
 
 
-rails g controller answers --no-assets --no-helper
-Running via Spring preloader in process 8134
-      create  app/controllers/answers_controller.rb
-      invoke  erb
-      create    app/views/answers
-      invoke  test_unit
-      create    test/controllers/answers_controller_test.rb
+  rails g controller answers --no-assets --no-helper
+  rails g controller comments --no-assets --no-helper
+
+  Running via Spring preloader in process 8134
+        create  app/controllers/answers_controller.rb
+        invoke  erb
+        create    app/views/answers
+        invoke  test_unit
+        create    test/controllers/answers_controller_test.rb
 
 
 
@@ -337,8 +340,8 @@ https://regexone.com/
 10) Time to create web pages
     insert lines in application.html for showing message after loggin and user logged
 11) Edit(insert lines) ApplicationController
-    it check if the user already exists
-    Add lines inside if of save about session
+    it checks if the user already exists
+    Add lines inside if to save about session
 
 12) create session
     rails g controller sessions --no-assets --no-helper
@@ -354,20 +357,19 @@ Running via Spring preloader in process 434
     new.html
 15) SessionsController
     *def create
-    *application.ht
+    *application.html
     *need to put before_action in each controller we need to control
 
-16)
-rails g migration add_user_to_questions user:references
-rails g migration add_user_to_products user:references
-rails g migration add_user_to_reviews user:references
-Running via Spring preloader in process 2846
-      invoke  active_record
-      create    db/migrate/20171212194903_add_user_to_questions.rb
-      rails g migration add_user_to_answers user:references
-      Running via Spring preloader in process 2864
-            invoke  active_record
-            create    db/migrate/20171212194928_add_user_to_answers.rb
+16) rails g migration add_user_to_questions user:references
+    rails g migration add_user_to_products user:references
+    rails g migration add_user_to_reviews user:references
+    Running via Spring preloader in process 2846
+          invoke  active_record
+          create    db/migrate/20171212194903_add_user_to_questions.rb
+          rails g migration add_user_to_answers user:references
+          Running via Spring preloader in process 2864
+                invoke  active_record
+                create    db/migrate/20171212194928_add_user_to_answers.rb
 17) migration file to edit
 18) rails db:migrate
 19) add belongs_to :user for models
@@ -376,11 +378,11 @@ Running via Spring preloader in process 2846
     *edited show.html of questions including user
     *add a method in user.rb for full_name
     *at show.html
-    *inserted & that checks if the field fis nil and [deleted]
-    * add line in question and answer controller in def create     @question.user = current_user
+    *inserted & that checks if the field is nil and [deleted]
+    * add line in question and answer controller in def create  @question.user = current_user
     * on show.html page in questions the line below in answer-list
     <p>By <%= @question.user&.full_name || "[deleted]" %></p>
-    * it was needed to restart using rails s
+    * it was needed to restart rails s
 
 20) run rails db:seed
 
@@ -422,10 +424,10 @@ https://github.com/CanCanCommunity/cancancan
 1) gem 'cancancan' ----> put inside Gemfile
    bundle
 2) rails g cancan:ability
-3) can :manage, Question do |question| ----> put inside ability.rb (model)
+3) can :manage, Question do |question| ----> put at the end of ability.rb (model)
    *manage allow everything related of CRUD
-   *need the user set up or won't work
-   *uncomment line 10 about 'user ||='
+   *need the user sign up or won't work
+   *uncomment line 7 about 'user ||='
    *include the line user == question.user
 4) Add if statment in show.html before edit or where we need it
    if can?(:manage, @question)
@@ -436,10 +438,11 @@ https://github.com/CanCanCommunity/cancancan
 6) answers_controller put the same above
 7) insert if in show.html from answer in the question view
 8) rails g migration add_is_admin_to_user is_admin:boolean
+   set default: false
    rails db:migrate
 9) seeds --- added is_admin: true
   puts "Login as admin with #{super_user.email} and password of '#{PASSWORD}'!"
-10) ability.rb uncomment if in line 11 putting is inside:
+10) ability.rb uncomment if in line 11 putting is_ inside:
     user.is_admin?
     *below is the line done inside pry
 11) rails g controller Admin::Dashboard --no-assets --no-helper
@@ -516,6 +519,59 @@ https://wellamzn.herokuapp.com/
 https://git.heroku.com/wellamzn.git
 
 
+
+
+>>>>> many to many
+
+1) rails g model like question:references user:references
+2) rails db:migrate
+3) has_many in class User model
+   the same in likes and question
+4) rails g controller likes --no-helper --no-assets
+5) routes for likes (include , shallow: true)
+6) added link to Like
+7) created line for unlike at question controller (show)
+8) added line in like controller in destroy to remove like
+9) included font-awesome
+   (it's good to have at gem file)
+10) added line *= require font-awesome in applicaton.scss
+11) ability.rb added line to allow any user likes
+12) added line application.html
+13) chanded index in question controller
+14) changed first line at index.html
+
+
+
+[30] pry(main)> history
+ 1: q = Question.last
+ 2: u = User.last
+ 3: q.likes
+ 4: u.likes
+ 5: q.likes << u
+ 6: q.likers
+ 7: u.likers
+ 8: q.likers << u
+ 9: u.liked_question
+10: u.liked_questions
+11: u.liked_questions.reload
+12: q1 = Question.find 44
+13: u.liked_questions << q1
+14: u.liked_questions
+15: u.liked_question_ids
+16: u.liked_question_ids = [237, 238]
+17: u.liked_questions
+18: q2 = Question.find 35
+19: q2 = Question.find 235
+20: Like.create(question: q2, user: u)
+21: u.liked_question
+22: u.liked_questions.reload
+23: u.liked_question
+24: u.likes.create(questions: q3)
+25: q3 = Question.find 233
+26: u.likes.create(questions: q3)
+27: u.likes.create(question: q3)
+28: u.likes.delete(q3)
+29: u.likes.destroy_all
 
 
 # bump

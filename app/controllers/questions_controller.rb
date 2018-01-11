@@ -12,7 +12,13 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.all.order(created_at: :desc)
+    # @questions = Question.all.order(created_at: :desc)
+    @liked = params[:liked]
+    if @liked
+      @questions = current_user.liked_questions
+    else
+      @questions = Question.all.order(created_at: :desc)
+    end
   end
 
   def create
@@ -53,6 +59,8 @@ class QuestionsController < ApplicationController
     # @question.save
     @answers = @question.answers.order(created_at: :desc)
     @answer = Answer.new
+    # @user_like = current_user.likes.find_by_question_id(@question)
+    @user_like = current_user.likes.find_by_question_id(@question) if user_signed_in?
   end
 
   def edit
@@ -86,7 +94,7 @@ class QuestionsController < ApplicationController
     # When using cancancan methods like `can?`, it knows
     # the logged in user as long as the method `current_user`
     # is defined for controllers.
-    unless can?(:manage, @question)
+            unless can?(:manage, @question)
       flash[:alert] = "Access Denied!"
       redirect_to home_path
     end

@@ -2,6 +2,10 @@ class User < ApplicationRecord
 has_many :answers, dependent: :nullify
 has_many :questions, dependent: :nullify
 
+has_many :likes, dependent: :destroy
+has_many :liked_questions, through: :likes, source: :question
+
+
 # `has_secure_password` is a built-in Rails method for models that
 # provides user authentication features:
 # 0. It will add two attribute accessors for `password` and
@@ -24,6 +28,6 @@ has_many :questions, dependent: :nullify
   validates :first_name, :last_name, presence: true
 
   def full_name
-    "#{first_name} #{last_name}" #put self if wants do writ, not for reading
+    "#{first_name} #{last_name}" #put self if wants do write, not for reading
   end
 end

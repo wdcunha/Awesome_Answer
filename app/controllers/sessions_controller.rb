@@ -20,20 +20,20 @@ class SessionsController < ApplicationController
   end
 
 
-    def destroy
-      session[:user_id] = nil
-      # When using `redirect_to` you can specify a flash message
-      # as argument such as `notice: 'Signed out!'` or `alert: 'Failed!'`
-      # That is equivalent to:
-      # flash[:notice] = 'Signed out!'
-      # flash[:alert] = 'Failed!'
-      redirect_to home_path, notice: 'Signed Out!'
-    end
+  def destroy
+    session[:user_id] = nil
+    # When using `redirect_to` you can specify a flash message
+    # as argument such as `notice: 'Signed out!'` or `alert: 'Failed!'`
+    # That is equivalent to:
+    # flash[:notice] = 'Signed out!'
+    # flash[:alert] = 'Failed!'
+    redirect_to home_path, notice: 'Signed Out!'
+  end
 
-private
-def session_params
-  params.require(:session).permit(:email, :password)
-end
+  private
+  def session_params
+    params.require(:session).permit(:email, :password)
+  end
 
 
 end

@@ -5,7 +5,13 @@ class Question < ApplicationRecord
   # It implies that the model where `has_many` is defined doesn't have the
   # the foreign_key (i.e. question_id) meaning that the `answers` has
   # the `question_id`.
-  has_many :answers, dependent: :destroy #if there's some dependece, destroy all of this
+  # has_many :users, through: :likes
+
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user
+
+  has_many :answers, dependent: :destroy #if there's some dependece,
+  # destroy all of this
   # `dependent: :destroy` will cause all associated answers to be destroyed
   # when the associated is destroyed.
 
