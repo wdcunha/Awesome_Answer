@@ -67,6 +67,18 @@
         <strong>Created At:</strong>
         <%= time_ago_in_words(answer.created_at) %> ago
       </p>
+
+
+      <% if can?(:star, answer) %>
+        <% user_star = current_user.stars.find_by_answer_id(answer) %>
+        <% if user_star %>
+          <%= link_to fa_icon('star 2x'), star_path(user_star), method: :delete %>
+        <% else %>
+          <%= link_to fa_icon('star-o 2x'), answer_stars_path(answer), method: :post %>
+        <% end %>
+      <% end %>
+
+
       <% if can?(:manage, @question) %>
       <%= link_to(
       'Delete',

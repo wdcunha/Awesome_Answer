@@ -60,6 +60,13 @@ class Ability
     can :crud, Answer do |answer|
       answer.user == user
     end
-  end
 
+    can :crud, Star do |star|
+      star.user == user
+    end
+
+    can :star, Answer do |answer|
+      answer.user != user
+    end
+  end
 end

@@ -27,9 +27,13 @@ Rails.application.routes.draw do
 
 
   resources :questions  do
+    # TODO: idaelly we should make the answers as shallow: true which requires
+    # some changes in the views and possibly controllers
     resources :answers, only: [:create, :destroy]
+    resources :answers, only: [], shallow: true do
+      resources :stars, only: [:create, :destroy], shallow: true
+    end
     resources :likes, only: [:create, :destroy], shallow: true
-    # resources :answers, only: [:create, :update, :delete]
   end
   # The `resources` will generate all CRUD REST conventions
   # routes we did below for any resource.
