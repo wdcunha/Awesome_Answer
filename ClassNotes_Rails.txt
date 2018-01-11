@@ -586,8 +586,12 @@ https://git.heroku.com/wellamzn.git
 5) created controller for star
 6) edited show html (attention for NOT put @answer but just answer)
 7) added lines in ability to give permissions
-8) 
 
+
+
+>>>>>>>>  creating Vote
+
+1) model
 
 
 

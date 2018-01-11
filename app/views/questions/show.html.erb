@@ -69,7 +69,7 @@
       </p>
 
 
-      <% if can?(:star, answer) %>
+      <% if user_signed_in? && can?(:star, answer) %>
         <% user_star = current_user.stars.find_by_answer_id(answer) %>
         <% if user_star %>
           <%= link_to fa_icon('star 2x'), star_path(user_star), method: :delete %>
