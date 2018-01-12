@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  match "/delayed_job", to: DelayedJobWeb, anchor: false, via: [:get, :post]
 
   # Admin related routes
   namespace :admin do
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
       resources :stars, only: [:create, :destroy], shallow: true
     end
     resources :likes, only: [:create, :destroy], shallow: true
+    resources :votes, only: [:create, :update, :destroy], shallow: true
   end
   # The `resources` will generate all CRUD REST conventions
   # routes we did below for any resource.

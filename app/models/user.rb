@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   has_many :stars, dependent: :destroy
   has_many :starred_answers, through: :stars, source: :answer
+
+  has_many :votes, dependent: :destroy
+  has_many :voted_questions, through: :votes, source: :question
+
   # `has_secure_password` is a built-in Rails method for models that
   # provides user authentication features:
   # 0. It will add two attribute accessors for `password` and
@@ -17,11 +21,15 @@ class User < ApplicationRecord
   # 3. It will add the instance method `authenticate` which can be used to
   #    to verify a user's password. If the correct password is entered,
   #    it will return the authenticated user otherwise it will return `false`.
+
   has_secure_password
 
-    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-
-  # validate the email field as format and if it's filled
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  # The following validations verifies that emails exists and are unique.
+  # As well, it veries using a regular expression that email respects a certain
+  # format meaning that the beginning email should have valid characters
+  # (e.g. alphabet, +, -, numbers, .), the middle has a `@` and that the end
+  # also only contains valid characters.
   validates :email, presence: true, uniqueness: true, format: VALID_EMAIL_REGEX
 
   # `validates` can take multiple column names as its first arguments. All
@@ -29,6 +37,6 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
 
   def full_name
-    "#{first_name} #{last_name}" #put self if wants do write, not for reading
+    "#{first_name} #{last_name}"
   end
 end

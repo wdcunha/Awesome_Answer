@@ -5,19 +5,23 @@ class Question < ApplicationRecord
   # It implies that the model where `has_many` is defined doesn't have the
   # the foreign_key (i.e. question_id) meaning that the `answers` has
   # the `question_id`.
-  # has_many :users, through: :likes
-
-  has_many :likes, dependent: :destroy
-  has_many :likers, through: :likes, source: :user
-
-  has_many :answers, dependent: :destroy #if there's some dependece,
-  # destroy all of this
+  has_many :answers, dependent: :destroy
   # `dependent: :destroy` will cause all associated answers to be destroyed
   # when the associated is destroyed.
 
   # `dependent: :nullify` will cause all associated answers to no longuer
   # associated before a question is destrored. In other words, their
   # `question_id` column will be set to `NULL`.
+
+  has_many :likes, dependent: :destroy
+  # has_many :users, through: :likes
+  has_many :likers, through: :likes, source: :user
+
+  has_many :votes, dependent: :destroy
+  has_many :voters, through: :votes, source: :user
+
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
 
   # `has_many :answers` will add the following instance methods to the
   # the Question model:
@@ -58,66 +62,49 @@ class Question < ApplicationRecord
     uniqueness: true
   )
 
-
   validates :body, presence: true, length: {minimum: 5, maximum: 2000}
   validates :view_count, numericality: {greater_than_or_equal_to: 0}
 
   # When writing your custom validation method instead use the `validate` method.
-    # Note that it is not plural. Its first argument is a symbol that is the name
-    # of a method inside of your model (whatever name you want).
-    # This method will be run during the validation phase and if it adds
-    # any error to the model instance it will fail the validation.
+  # Note that it is not plural. Its first argument is a symbol that is the name
+  # of a method inside of your model (whatever name you want).
+  # This method will be run during the validation phase and if it adds
+  # any error to the model instance it will fail the validation.
+  validate :no_monkey
 
-    after_initialize :set_defaults
-    before_save :squeeze
+  before_validation(:set_view_count)
 
-    scope :order_by, -> (field, direction) {
-      title({field.to_sym => direction.to_sym})
-      # title({:column => :direction})
-      # title({column: :direction})
-      # title(column: :direction)
-    }
-    scope :search, -> (title, body) {
-      where("title ILIKE '%#{title}%' or body ILIKE '%#{body}%'")
-    }
-
-    private
-
-    def squeeze
-      self.title.squeeze!(' ')
-    end
-
-    private
-    def set_defaults
-      # self.title ||= "Placeholder"
-    end
-
-    validate :no_monkey
-    before_validation :set_view_count
-
-    private
-    def no_monkey
-      if title.present? && title.downcase.include?('monkey')
-        errors.add(:title, "should not have a monkey! ð")
-      end
-
-      if body.present? && body.downcase.include?('monkey')
-        errors.add(:body, "should not have a monkey! ð")
-      end
-    end
-
-    def set_view_count
-     # When referring to attributes of a class (or class instance), we must
-     # use `self.` only when writing to that attribute. When reading, `self.`
-     # can be optionally omitted.
-     self.view_count ||= 0
-    end
-
+  def votes_result
+    votes.where({ is_up: true }).count - votes.where({ is_up: false }).count
   end
 
+  private
+  def no_monkey
+    if title.present? && title.downcase.include?('monkey')
+      errors.add(:title, "should not have a monkey! ð")
+    end
+
+    if body.present? && body.downcase.include?('monkey')
+      errors.add(:body, "should not have a monkey! ð")
+    end
+  end
+
+  def set_view_count
+    # When referring to attributes of a class (or class instance), we must
+    # use `self.` only when writing to that attribute. When reading, `self.`
+    # can be optionally omitted.
+    self.view_count ||= 0
+  end
+end
 
 
 
 
 
-  # bump
+
+
+
+
+
+
+# bump

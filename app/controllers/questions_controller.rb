@@ -12,7 +12,6 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    # @questions = Question.all.order(created_at: :desc)
     @liked = params[:liked]
     if @liked
       @questions = current_user.liked_questions
@@ -30,7 +29,7 @@ class QuestionsController < ApplicationController
     # instance variables. That is prefix `@` in front of their name. Local
     # variables are inaccessible inside views.
     @question = Question.new question_params
-    # @question.user_id = current_user
+    # @question.user_id = session[:user_id]
     @question.user = current_user
 
     # With the gem `pry` installed, you can use the `binding.pry` command
@@ -39,8 +38,13 @@ class QuestionsController < ApplicationController
     # binding.pry
 
     if @question.save
-      # redirect_to home_path
-
+      # To run a job in the future,
+      # use the `.set()` method and pass it the wait option
+      # with an amount of time (e.g. 5.days, 1.week, 2.year, 30.seconds)
+      # If your job takes arguments, pass those arguments to
+      # the `.perform_now()` or `.perform_later()` method.
+      QuestionReminderJob.set(wait: 5.days).perform_later(@question.id)
+      # redirect_to question_path(@question)
       # `redirect_to` can also take a model instance as an argument.
       # When it gets a model instance, it will redirect the user to its
       # show page which requires that the relevant route is defined.
@@ -59,8 +63,8 @@ class QuestionsController < ApplicationController
     # @question.save
     @answers = @question.answers.order(created_at: :desc)
     @answer = Answer.new
-    # @user_like = current_user.likes.find_by_question_id(@question)
     @user_like = current_user.likes.find_by_question_id(@question) if user_signed_in?
+    @user_vote = current_user.votes.find_by_question_id(@question) if user_signed_in?
   end
 
   def edit
@@ -82,24 +86,24 @@ class QuestionsController < ApplicationController
 
   private
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, { tag_ids: [] })
   end
 
   def find_question
     @question = Question.find params[:id]
   end
 
-
   def authorize_user!
     # When using cancancan methods like `can?`, it knows
     # the logged in user as long as the method `current_user`
     # is defined for controllers.
-            unless can?(:manage, @question)
+    unless can?(:crud, @question)
       flash[:alert] = "Access Denied!"
       redirect_to home_path
     end
   end
 end
+
 
 
 

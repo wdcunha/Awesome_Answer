@@ -591,10 +591,103 @@ https://git.heroku.com/wellamzn.git
 
 >>>>>>>>  creating Vote
 
-1) model
+1) rails g model vote user:references question:references is_up:boolean
+2) rails db:migrate
+3) rails g controller votes --no-assets --no-helper
+4) defined routes for vote
+   there's more state than more vote or unvote:
+   is_up true /false
+   destroy vote update  is_up: false......
+5) edited controller votes
+6) add code at show html -- vote up and down
+7) create function created
+8) inserted line for validate in vote model
+9) has has_many for user and question models
+10) included line in question controller inside show for user vote
+11) show html implemented if for user_signed_in
+12) created vote helper and took out code from show html
+    remaining just one line
+13) added action votes_result at question model
+14) added line in votes helper and in complemente,
+    show html added .html_safe
+
+>>>>>>>>> tagging
+
+1) rails g model tag name
+2) rails g model tagging question:references tag:references
+3) rails db:migrate
+4) some datas in seed ---
+   rails db:seed
+5) has_many for models
+6) show html line if can (crud)
+7) question controller authorize user
 
 
 
+
+
+
+[8] pry(main)> history
+1: tags.map {|tag| tag.name}
+2: tags = TAg.all
+3: tags = Tag.all
+4: tags.map {|tag| tag.name}
+5: tags.map {|tag| tag.name + tag.id.to_s }
+6: tags.map(&:name)
+7: tags.pluck(:name).join(', ')
+
+
+
+
+>>>>> mailer
+
+1) rails g mailer answer_mailer
+2) changed the email in application_mailer
+3) code added in the answer_mailer
+4) created notify html
+5) letter opener in gem file ---> gem 'letter_opener'
+   bundle
+6) added line at the development.rb in environments
+7) code added to answer controller for notify question
+8) edited notify html
+9) added line development.rs for host
+10) 2 files in initializers: app_keys to define user and password
+11) defined app password on gmail (I don't have)
+12) created setup_mail.rb inside initializers folder
+13) gem file: related to email job, being able to deliver mail latter
+    gem 'delayed_job_active_record'
+    gem 'delayed_job_web'  (see all process is schedled)
+14) rails g delayed_job:active_record
+15) rails db:migrate
+16) added line to application.rb in config folder:
+    config.active_job.queue_adapter = :delayed_job
+17) rails g job question_reminder
+18) set up question reminder in app/job
+19) put line in routes to see page to show Enqueued process
+    match "/delayed_job", to: DelayedJobWeb, anchor: false, via: [:get, :post]
+    http://localhost:3000/delayed_job/ (to see Enqueued process)
+    QuestionReminderJob  (inside rails c)
+    QuestionReminderJob.set(wait: 1.minute).perform_later
+    QuestionReminderJob.set(wait: 1.year).perform_later
+    rails jobs:work  (a job server --- needs to be working if want run pendings and can use letter opener or smtp)
+20) answer controller in create, and set deliver later
+21) changed question reminder
+22) added line in question controller/create
+23)
+
+
+added line in .gitignore
+AnswerMailer
+
+defined 2 steps check first of allow
+
+gmail password:
+http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration-for-gmail
+app password
+
+gmail myaccount:
+https://myaccount.google.com/lesssecureapps?pli=1
+turned on
 
 
 # bump
