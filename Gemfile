@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'  #increment encryption
 gem 'jquery-rails'
+gem 'chosen-rails'
 gem 'bootstrap'
 
 # Use Capistrano for deployment

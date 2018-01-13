@@ -31,13 +31,28 @@
     <%= form.text_area :body %>
   </div>
 
+  <div>
+    <%= form.label :tags %> <br />
+    <%= form.collection_select(
+      :tag_ids,
+      Tag.order(:name),
+      :id,
+      :name,
+      {},
+      {
+        multiple: true,
+        class: 'chosen-select'
+      }
+    ) %>
+  </div>
+  
   <%#= form.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
-  <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |box| %>
-    <div>
+  <%#= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |box| %>
+  <%#=  <div>
       <p>
         <span class='tag-checkbox'><%= box.check_box %></span>
-        <%= box.label %>
-      </p>
+  <%#=      <%= box.label %>
+  <%#=    </p>
     </div>
   <% end %>
 

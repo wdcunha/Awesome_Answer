@@ -15,11 +15,10 @@ class QuestionReminderJob < ApplicationJob
     question = Question.find question_id
 
     # send email reminder to owner of question
-    if (false) {
+    if false
       # To run a recurring job, you call the job again inside
       # its perform like this. Kind of a recursive job.
       QuestionReminderJob.set(wait: 5.days).perform_later(question_id)
-    }
+    end
   end
-
 end

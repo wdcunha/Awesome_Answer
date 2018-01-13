@@ -3,6 +3,7 @@ PASSWORD = 'supersecret'
 Answer.destroy_all
 Question.destroy_all
 User.destroy_all
+Tag.destroy_all
 
 super_user = User.create(
   first_name: 'Jon',
@@ -28,6 +29,12 @@ users = User.all
 
 puts Cowsay.say("Created #{users.count} users", :tux)
 
+['Arts', 'Sports', 'News', 'Cats', 'Cartoons', 'Lifestyle', 'Tech'].each do |tag_name|
+  Tag.create(name: tag_name)
+end
+
+tag = Tag.all
+
 100.times do
   Question.create(
     title: Faker::RickAndMorty.quote,
@@ -51,9 +58,7 @@ questions.each do |question|
   end
 end
 
-['Arts', 'Sports', 'News', 'Cats', 'Cartoons', 'Lifestyle', 'Tech'].each do |tag_name|
-  Tag.create(name: tag_name)
-end
+
 
 
 answers = Answer.all

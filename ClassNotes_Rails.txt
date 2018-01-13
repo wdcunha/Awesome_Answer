@@ -673,7 +673,11 @@ https://git.heroku.com/wellamzn.git
 20) answer controller in create, and set deliver later
 21) changed question reminder
 22) added line in question controller/create
-23)
+23) gem file: gem 'chosen-rails'  (tags for field in the page)
+24) application js and scss added line to run chosen
+25) added file question.js in JavaScript folder
+26) edited _form
+
 
 
 added line in .gitignore
