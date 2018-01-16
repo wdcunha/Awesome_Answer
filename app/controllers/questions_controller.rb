@@ -18,7 +18,20 @@ class QuestionsController < ApplicationController
     else
       @questions = Question.all.order(created_at: :desc)
     end
+
+    # respond_to method enables an action to send different
+    # responses based on the type of format requested.
+    respond_to do |format|
+      format.html { render }
+      # ActiveRecord objects have the `to_json` method. When using
+      # `render` with the `json:` option on a record, it will
+      # automatically `to_json` to convert that record into JSON.
+      # JSON (JavaScript Object Notation)
+      format.json { render json: @questions }
+      format.xml { render xml: @questions }
+    end
   end
+
 
   def create
     # Use `render json: params` to help you understand what data your

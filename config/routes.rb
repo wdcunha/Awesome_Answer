@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # namespace will automatically prefix routes with the first argument.
+  # Meaning that the route below will all question routes
+  # with /api/v1/ in front.
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      resources :questions
+    end
+  end
+
+  
   match "/delayed_job", to: DelayedJobWeb, anchor: false, via: [:get, :post]
 
   # Admin related routes
