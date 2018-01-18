@@ -25,7 +25,7 @@
 <% if can?(:like, @question) %>
   <% if @user_like %>
     <%= link_to fa_icon("thumbs-up 2x"), like_path(@user_like), method: :delete %>
-  <% else %>''
+  <% else %>
     <%= link_to fa_icon("thumbs-o-up 2x"), question_likes_path(@question), method: :post %>
   <% end %>
 <% end %>

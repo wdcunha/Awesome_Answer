@@ -41,7 +41,7 @@ gem 'jquery-rails'
 gem 'chosen-rails'
 gem 'bootstrap'
 gem 'active_model_serializers'
-
+gem 'rack-cors'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

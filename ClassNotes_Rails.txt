@@ -652,7 +652,7 @@ https://git.heroku.com/wellamzn.git
 8) edited notify html
 9) added line development.rs for host
 10) 2 files in initializers: app_keys to define user and password
-11) defined app password on gmail (I don't have)
+11) defined app password on gmail
 12) created setup_mail.rb inside initializers folder
 13) gem file: related to email job, being able to deliver mail latter
     gem 'delayed_job_active_record'
@@ -673,11 +673,6 @@ https://git.heroku.com/wellamzn.git
 20) answer controller in create, and set deliver later
 21) changed question reminder
 22) added line in question controller/create
-23) gem file: gem 'chosen-rails'  (tags for field in the page)
-24) application js and scss added line to run chosen
-25) added file question.js in JavaScript folder
-26) edited _form
-
 
 
 added line in .gitignore
@@ -692,6 +687,14 @@ app password
 gmail myaccount:
 https://myaccount.google.com/lesssecureapps?pli=1
 turned on
+
+
+
+(tags for field in the page)
+1) gem file: gem 'chosen-rails'
+2) application js and scss added line to run chosen
+3) added file question.js in JavaScript folder
+4) edited _form
 
 
 
@@ -719,6 +722,8 @@ turned on
     gem 'active_model_serializers'
     bundle
 11) rails g serializer question title:string body:text
+    added show action to question_controller api
+    created tab in postman for Show
     tested in postman using a question: http://localhost:3000/api/v1/questions/302
     added belongs_to user
     added class UserSerializer
@@ -732,14 +737,16 @@ turned on
 16) added text for ApplicationController Api
 17) rails g migration add_api_key_to_user api_key:string
 18) included line in the file generated with index
+    rails db:migrate
 19) created a private method generate api key
     loop to check if there's no one else using the same key
-20) added before create for generate_api_key
+20) created method generate_api_key in user model
+    added before create for generate_api_key
 21) included methods in ApplicationController api:
     current_user
     api_key
 22) added line in show of QuestionsController api
-23) added 
+23) added
 
 
 
