@@ -1,5 +1,7 @@
 {
   "name": "awesome_answers",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "react-router-dom": "^4.2.2"
+  }
 }
