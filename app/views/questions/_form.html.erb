@@ -16,24 +16,31 @@
     or not an instance is saved to the database.
 %>
 
-<%= form_for @question do |form| %>
-  <% if @question.errors.present? %>
+<%= simple_form_for @question do |form| %>
+  <!-- <% if @question.errors.present? %>
     <p><%= @question.errors.full_messages.join(', ') %></p>
-  <% end %>
+  <% end %> -->
 
-  <div>
+  <!-- <div>
     <%= form.label :title %>
     <%= form.text_field :title %>
-  </div>
-
-  <div>
+  </div> -->
+  <!-- <%= form.input :title, required: false %> -->
+  <%= form.input :title %>
+  <!-- <div>
     <%= form.label :body %>
     <%= form.text_area :body %>
-  </div>
+  </div> -->
+  <%= form.input :body %>
 
-  <div>
-    <%= form.label :tags %> <br />
-    <%= form.collection_select(
+  <%= form.input :image %>
+
+  <!-- <%= form.input :body, as: :string %> -->
+  <%= form.association :tags, input_html: { class: 'chosen-select' } %>
+
+  <!-- <div> -->
+    <%#= form.label :tags %> <br />
+    <%#= form.collection_select(
       :tag_ids,
       Tag.order(:name),
       :id,
@@ -44,8 +51,8 @@
         class: 'chosen-select'
       }
     ) %>
-  </div>
-  
+  <!-- </div> -->
+
   <%#= form.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
   <%#= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |box| %>
   <%#=  <div>
@@ -56,5 +63,6 @@
     </div>
   <% end %>
 
-  <%= form.submit %>
+  <!-- <%= form.submit %> -->
+  <%= form.submit class: 'btn btn-primary' %>
 <% end %>

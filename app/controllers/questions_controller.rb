@@ -84,6 +84,10 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    @question.slug = nil # this will force friendly_id to re-generate slug, if
+                     # we enabled the `history` option then the previous
+                     # will be stored history and will still work
+
     if @question.update(question_params)
       redirect_to question_path(@question)
     else
@@ -99,7 +103,7 @@ class QuestionsController < ApplicationController
 
   private
   def question_params
-    params.require(:question).permit(:title, :body, { tag_ids: [] })
+    params.require(:question).permit(:title, :body, :image, { tag_ids: [] })
   end
 
   def find_question
@@ -111,7 +115,7 @@ class QuestionsController < ApplicationController
     # the logged in user as long as the method `current_user`
     # is defined for controllers.
     unless can?(:crud, @question)
-      flash[:alert] = "Access Denied!"
+      flash[:danger] = "Access Denied!"
       redirect_to home_path
     end
   end

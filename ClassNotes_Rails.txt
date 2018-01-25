@@ -40,7 +40,6 @@ app.about_url
 
 rails db:migrate
 rails g migration add_view_count_to_questions  view_count:integer
-rails g migration add_view_count_to_questions  view_count:integer
 rails g migration add_last_name_to_users  last_name:string
 rails g migration ChangePriceInProducts
 https://codequizzes.wordpress.com/2013/06/06/rails-migrations-to-add-a-column-and-change-column-type/
@@ -791,6 +790,178 @@ fetch('http://localhost:3000/api/v1/questions')
   fetch('http://localhost:3000/api/v1/questions')
 	.then(response => response.json())
 	.then(data => console.log(data))
+
+
+>>>>>>>  simple form
+
+* it is possible to integrate with bootstrap
+
+1) gem 'simple_form'
+2) rails g simple_form:install --bootstrap
+   * locales support mutiple languages
+3) changed form_for to simple_form_for
+   lable and input in just one line
+   *change automatically for input or textarea
+   added line for association (tag)
+   excluded errors lines
+4) added lines to application.scss for has-error
+5) edited user new form with simple_form_for
+
+
+6) if url is more descriptive, google treat better in searchs
+   question model added method to_params
+   parameterize used for implementing url
+7) friendly_id used to hide the number from url
+   gem 'friendly_id', '~> 5.1.0'
+   rails generate friendly_id
+   rails db:migrate
+   rails g migration add_slug_to_questions
+   rails g migration add_slug_to_quesitons slug:string:index
+   rails db:migrate
+8) added lines to question model
+9) added line to question_controller in update method for slug
+
+
+Running via Spring preloader in process 30000
+      create  config/initializers/simple_form.rb
+      create  config/initializers/simple_form_bootstrap.rb
+       exist  config/locales
+      create  config/locales/simple_form.en.yml
+      create  lib/templates/erb/scaffold/_form.html.erb
+
+
+Running via Spring preloader in process 31680
+      create  db/migrate/20180123222028_create_friendly_id_slugs.rb
+      create  config/initializers/friendly_id.rb
+
+
+>>>>>  store files
+
+1) gem 'carrierwave', '~> 1.0'
+2) rails g migration add_image_to_questions image
+3) rails g uploader image
+   image_upload is a file where we have settings for uploading like directory, type of file
+4) _form.html added line input image
+   need to put enctype mannualy
+5) added :image in question_params in question_controller
+6) sudo apt-get install imagemagick
+7) gem 'mini_magick'
+  * it generates differents sizes of images when user upload (4 files generated)
+8) added lines for resizing pics in image_uploader.rb
+9) added lines to show all images generated
+   :thumb \  :medium  \ :large
+10) added /public/uploads/* to gitignore file
+11) amazon aws integration
+    gem 'fog'
+12) added file inside config/initializers folder
+13) added if image present in show html question
+
+
+spring stop (when we created folder picture in public)
+
+>>>> AWS Amazon Access Key
+
+1) In the user name, My Security Credentials
+2) Create user first
+3) Create Key
+   can generate file csv
+4) In service menu, click on s3
+5) Select Bucket and choose a name we can remember after
+   (awesome-answer-codecore)
+   consider it like a folder
+6) comment line of storage :file and uncomment storage :fog
+   added if for production environment
+7) fill out setup_fog.rb (region)
+   https://docs.aws.amazon.com/general/latest/gr/rande.html#apigateway_region
+
+   Rails.env.production?
+   Rails.env.test?
+   Rails.env.development?
+
+>>>>> Maps API
+geocoder generate latitude and longitude
+gmap simplify showing the map in the page avoiding library in JavaScript
+
+3) rails g migration add_address_fields_to_users address longitude:float latitude:float
+   rails db:migrate
+1) gem geocoder
+   bundle
+3) add in user.rb code for geocode_buy
+   after_validation
+4) add line in sign up (:address)
+5) users_controller in def user_params add :address
+6) gem gmap
+   bundle
+7) rails g migration add_slug_to_users slug
+8) extend friendly_id inside user.rb
+9) user_controllers add user.find params in show method
+10) add show for user routes
+11) create show page for users
+12) add link_to in 'By' line
+13) add lines in application.html
+14) get google api key
+    https://developers.google.com/maps/documentation/javascript/get-api-key
+    copy/paste it in the line where is [api key] in application.html
+15) gem 'underscore-rails'
+16) put lines in application.js
+    //= require underscore
+    //= require gmaps/google
+17) put code in show.html user for maps <script type...
+    handler.getMap().setZoom(18); (determine zoom)
+18) added if longitude and latitude
+19) users_controller added index method
+20) created index page for users view
+    added Nearby Users
+    added , :index for routes
+21) created lat and long fake:
+    pry(main)> history
+    1: User.all
+    2: u = User.last
+    3: lng = u.longitude
+    4: lat = u.latitude
+    5: User.where(latitude: nil).each {|u| u.update(latitude: lat + (rand(1000) / 10000), longitude: lng + (rand(1000)/ 10000)) }
+    6: User.all
+    User.all.each {|u| u.update(latitude: lat + (rand(1000) / 10000.0), longitude: lng + (rand(1000)/ 10000.0)) }
+22) added code for index method in users_controller
+23) added code from show page users to index page
+    changed hash for markers
+
+24)
+
+
+>>>>>
+
+1) rails g model survey body:text
+2) rails g model option survey:references body
+3) rails g controller surveys
+4) rails db:migrate
+5) code for survey_controller
+6) created new html for survey view
+    surveys/new
+7) survey.rb added code:
+   validates
+   has_many
+   accepts
+8) added validates for Option.rb
+    Survey.create({ body: 'abc', options_attributes: { '0' => { body: 'option 1' }, '12' => { body: 'option 2' } }})
+9) added code in survey_controller for empty survey at new method
+   4.times { @survey.options.build }
+10) added line in new html in survey view
+    generate more fields
+11) added option for if all blanks to accept field left blank
+
+
+1) gem 'cocoon'
+2) bundle
+3) application.js added line for it
+4) added option to allow destroy inside survey_controller in options_attributes
+5) added file _option_fields.html.erb in survey view
+
+
+
+
+
+
 
 
 # bump

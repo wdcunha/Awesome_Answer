@@ -42,12 +42,21 @@ gem 'chosen-rails'
 gem 'bootstrap'
 gem 'active_model_serializers'
 gem 'rack-cors'
+gem 'carrierwave', '~> 1.0'
+gem 'fog'
+gem 'mini_magick'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 gem 'cancancan'
 gem 'cowsay', '~> 0.3.0'
 gem 'faker', github: 'stympy/faker'
+gem 'simple_form'
+gem 'friendly_id', '~> 5.2.3'
+gem 'geocoder'
+gem 'gmaps4rails'
+gem 'underscore-rails'
+gem 'cocoon'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

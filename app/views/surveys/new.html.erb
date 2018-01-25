@@ -1,0 +1,19 @@
+<%= simple_form_for @survey do |f| %>
+  <%= f.input :body %>
+
+  <div id="options">
+    <!-- <%# counter = 1 %> -->
+    <!-- <%#= f.simple_fields_for :options do |opt| %> -->
+    <%= f.simple_fields_for :options do |opt| %>
+      <%= render 'option_fields', f: opt %>
+      <!-- <%#= opt.input :body, label: "Option #{counter}", required: false %> -->
+      <!-- <%# counter += 1 %> -->
+    <% end %>
+  <div class="links">
+    <%= link_to_add_association 'add option', f, :options  %>
+  </div>
+</div>
+
+
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
