@@ -45,8 +45,8 @@ def user_params
     :first_name,
     :last_name,
     :email,
-    :password,
     :address,
+    :password,
     :password_confirmation
     )
   end

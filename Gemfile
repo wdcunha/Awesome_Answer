@@ -45,6 +45,8 @@ gem 'rack-cors'
 gem 'carrierwave', '~> 1.0'
 gem 'fog'
 gem 'mini_magick'
+gem 'jwt'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
