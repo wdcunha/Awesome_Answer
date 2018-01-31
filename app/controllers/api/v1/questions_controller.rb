@@ -17,6 +17,7 @@ class Api::V1::QuestionsController < Api::ApplicationController
   end
 
   def index
+    # nil.test
     @questions = Question.order(created_at: :desc)
     # When using jbuilder, do not use the `json:`
     # option with render. Use render as you with erb
@@ -28,11 +29,16 @@ class Api::V1::QuestionsController < Api::ApplicationController
     question = Question.new(question_params)
     question.user = current_user
 
-    if question.save
-      render json: { id: question.id }
-    else
-      render json: { error: question.errors.full_messages }
-    end
+    # When saving a model instance with `save!`, any
+    # validation error that occurs will cause your
+    # app to raise an ActiveRecord::RecordInvalid error.
+    question.save!
+    render json: { id: question.id }
+    # if question.save
+    #   render json: { id: question.id }
+    # else
+    #   render json: { error: question.errors.full_messages }
+    # end
   end
 
   def destroy

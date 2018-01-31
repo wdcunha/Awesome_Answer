@@ -1,6 +1,34 @@
 class Api::ApplicationController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+    # The priority for rescue_from is in reverse order.
+    # Put more specific errors last and more general errors
+    # first.
+
+  # StandardError is the ancestor class of all errors that might
+  # because of bugs in our code.
+  rescue_from StandardError, with: :standard_error
+  # `rescue_from` is method usable controllers to prevent
+  # an application from crashing when an error occurs.
+  # The first argument is a type of error such as ActiveRecord::RecordNotFound,
+  # StandardError, etc.
+  # You can provide a 'with:' argument with the name of a method
+  # that will be called when the error occurs.
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
+
+
+  def not_found
+    render(
+      json: {
+        errors: [{
+          type: 'NotFound'
+        }]
+      },
+      status: :not_found # :not_found is alias for 404 in rails
+    )
+  end
+
   def user_signed_in?
     current_user.present?
   end
@@ -43,4 +71,53 @@ class Api::ApplicationController < ApplicationController
   def authenticate_user!
     head :unauthorized unless current_user.present?
   end
+
+
+  protected
+  # protected is like private except that it prevents
+  # descendant classes from using the protected methods.
+  def record_not_found(error)
+    render(
+      json: {
+        errors: [{
+          type: error.class.to_s,
+          message: error.message
+        }]
+      },
+      status: :not_found
+    )
+  end
+
+    def standard_error(error)
+      render(
+        json: {
+          errors: [{
+            type: error.class.to_s,
+            message: error.message
+          }]
+        },
+        status: :internal_server_error # <-- Rails alias for status code 500
+      )
+    end
+
+  def record_invalid(error)
+    # binding.pry
+    # render json: error
+    record = error.record
+    errors = record.errors.map do |field, message|
+      {
+        type: error.class.to_s,
+        record_type: record.class.to_s,
+        field: field,
+        message: message
+      }
+    end
+    render(
+      json: {
+        errors: errors
+      },
+      status: :unprocessable_entity # <-- alias for status code 522
+    )
+  end
+
 end

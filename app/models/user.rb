@@ -11,10 +11,10 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :voted_questions, through: :votes, source: :question
 
-
+'
   geocoded_by :address
   after_validation :geocode
-
+'
 
   extend FriendlyId
   # friendly_id :slug_candidates, use: [:slugged, :history, :finders]

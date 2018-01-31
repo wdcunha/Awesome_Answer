@@ -42,6 +42,7 @@ rails db:migrate
 rails g migration add_view_count_to_questions  view_count:integer
 rails g migration add_last_name_to_users  last_name:string
 rails g migration ChangePriceInProducts
+rails g migration ChangeIsAdminInUsers
 rails g migration RemoveIndexInProducts
 https://codequizzes.wordpress.com/2013/06/06/rails-migrations-to-add-a-column-and-change-column-type/
 
