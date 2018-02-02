@@ -970,6 +970,85 @@ gmap simplify showing the map in the page avoiding library in JavaScript
 
 
 
+>>>> React web package
+
+1) gem 'webpacker', '~> 3.0.0'
+   bundle
+2) rails webpacker:install
+webpack -w (compile)
+3) yarn install
+   npm install --global yarn
+   (https://www.npmjs.com/package/yarn/tutorial)
+   yarn add jwt-decode
+4) added lines in the head of application.html
+   <%= javascript_pack_tag 'application' %>
+5) created folder utilities
+   created file dom.js in folder JavaScript folder
+6) created folder effects
+   created file main.js
+
+
+
+   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+   echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+
+_______ integrating react
+https://reactstrap.github.io/
+
+1) rails webpacker:install:react
+2) added line to index.html file in welcome
+   *just to show message in this page (example only)
+3) created a new directory components
+   created file Navigation.js (by convention, same name of component)
+4) yarn add reactstrap
+5) added lines to Navigation.js
+6) in application.html added div at beggining of body
+7) application.js added lines for import react and Navigation
+   ReactDOM.render
+8) edited some files to jsx (navigation and application)
+9) rm -rf node_modules
+10) yarn (didn't solved)
+11) yarn add reactstrap@next  (last version)
+12) added code for navbar
+    collapse
+    put menu options
+    added constructor
+    toggle  inside constructor, function and navbar toggle
+13) redone div in application.html
+    defined current_user.to_json and other information
+14) application.jss added code to props
+15) took out user information from application.html
+    pasted in user.rb  as method to_props
+    put safe navigation symbol (&)
+16) added method _renderUserNavItems
+    sign in and sign out cut and pasted here
+    added line for it at the end of collapse tag
+17) deleted old menu from application.html
+
+
+
+18) rails g controller client --no-assets --no-helper index
+19) edited routes
+20) created file for template in view/client folder (index.html)
+21) added client.html in layouts view folder
+22) copied folders from awesome_answer_react:
+cp -R ../Nov-2017-Cohort/React/awesome-answers-react/src/requests app/javascript/
+cp -R ../Nov-2017-Cohort/React/awesome-answers-react/src/components app/javascript/
+23) created file client.jsx at /javascript/packs folder
+24) yarn add react-router-dom
+25) edited QuestionIndexPage componentDidMount
+    added Question and more lines
+26) edited app.js (basename client)
+
+
+
+d = document.querySelector('#Navigation')
+
+
+
+
+
 
 
 

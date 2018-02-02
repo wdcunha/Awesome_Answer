@@ -46,7 +46,7 @@ gem 'carrierwave', '~> 1.0'
 gem 'fog'
 gem 'mini_magick'
 gem 'jwt'
-
+gem 'webpacker', '~> 3.0.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

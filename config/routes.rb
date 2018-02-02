@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  match '/client', to: "client#index", via: :all
+  match '/client/*path', to: "client#index", via: :all
+
   # namespace will automatically prefix routes with the first argument.
   # Meaning that the route below will all question routes
   # with /api/v1/ in front.
