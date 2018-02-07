@@ -54,7 +54,9 @@ class User < ApplicationRecord
 
   # `validates` can take multiple column names as its first arguments. All
   # validation rules provided will apply all given columns.
-  validates :first_name, :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true, unless: :from_oauth?
+  # validates :first_name, :last_name, presence: true
 
   # `serialize` takes a column name which will change the behaviour
   # when writing and reading to that column.
@@ -81,6 +83,8 @@ class User < ApplicationRecord
   end
 
   def self.create_from_oauth(oauth_data)
+    first_name, last_name =
+      oauth_data["info"]["name"]&.split || [oauth_data["info"]["nickname"]]
     first_name, last_name = oauth_data["info"]["name"].split
     # const [firstName, lastName] = [1, 2]
 

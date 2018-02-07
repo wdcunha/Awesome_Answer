@@ -1125,7 +1125,9 @@ it has concept of varibles and much more
     included line:   serialize :oauth_raw_data
 11) added code for user in callbacks
 12) inserted line for method self.find in user model
-13)
+13) made change in self.create_from_oauth for consider case with nil for name
+    changed validates for first_name and last_name
+
 
 
 
