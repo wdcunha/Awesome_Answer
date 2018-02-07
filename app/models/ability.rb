@@ -51,6 +51,11 @@ class Ability
       question.user != user
     end
 
+    can :publish, Question do |question|
+      question.user == user
+    end
+
+
     can :crud, Like do |like|
       like.user == user
     end

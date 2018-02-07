@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  get 'callbacks/index'
+
+  get "/auth/github", as: :sign_in_with_github
+  get "/auth/:provider/callback", to: "callbacks#index"
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   match '/client', to: "client#index", via: :all
   match '/client/*path', to: "client#index", via: :all
 
@@ -60,7 +67,12 @@ Rails.application.routes.draw do
     end
     resources :likes, only: [:create, :destroy], shallow: true
     resources :votes, only: [:create, :update, :destroy], shallow: true
+    resources :publishings, only: :create
   end
+
+  resources :my_questions, only: :index
+
+
   # The `resources` will generate all CRUD REST conventions
   # routes we did below for any resource.
 

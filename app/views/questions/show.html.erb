@@ -37,6 +37,10 @@
   %>
 <% end %>
 
+<% if can?(:publish, @question) && @question.may_publish? %>
+  <%= link_to 'publish', question_publishings_path(@question), method: :post %>
+<% end %>
+
 <% if can?(:like, @question) %>
   <% if @user_like %>
     <%= link_to fa_icon("thumbs-up 2x"), like_path(@user_like), method: :delete %>

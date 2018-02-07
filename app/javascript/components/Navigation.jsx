@@ -44,6 +44,9 @@ class Navigation extends Component {
       ]);
     } else {
       return ([
+        <NavItem key="0">
+          <NavLink href="/auth/github">Sign In with Github</NavLink>
+        </NavItem>,
         <NavItem key="1">
           <NavLink href="/session/new">Sign In</NavLink>
         </NavItem>,
@@ -72,6 +75,10 @@ class Navigation extends Component {
 
             <NavItem>
               <NavLink href="/questions">Questions</NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink href="/my_questions">My Questions</NavLink>
             </NavItem>
 
             {/* <NavItem>

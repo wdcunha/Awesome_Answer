@@ -12,6 +12,7 @@
  *
  *= require font-awesome
  *= require chosen
+ *= stub active_admin
  *= require_tree .
  *= require_self
  */
@@ -28,6 +29,19 @@ html {
   margin-bottom: 0.5rem;
 }
 
+$body-bg: rgb(322, 241, 199);
+
+// $theme-colors: (
+//   "primary": rgb(255, 194, 102),
+//   "danger": rgb(200, 48, 0)
+// );
+
+// $theme-colors: (
+//   "primary": rgb(255, 194, 102),
+//   "danger": rgb(200, 48, 0)
+// );
+
+
 /*
   The following statement allows us to load scss code from another file.
   We use it load the bootstrap installed by the gem `bootstrap`. This only
@@ -37,6 +51,10 @@ html {
 @import 'bootstrap';
 
 
+// $main-color: rgb(236, 97, 94);
+// h1 {
+//   color: darken($main-color, 20);
+// }
 
 .tag-checkbox {
   margin-right: 25px;

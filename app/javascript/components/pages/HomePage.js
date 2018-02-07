@@ -6,7 +6,7 @@ function HomePage (props) {
       className='HomePage'
       style={{padding: '0 20px'}}
     >
-      <h2>404 Not Found</h2>
+      <h2>Welcome to Awesome Answer HomePage!</h2>
     </main>
   );
 }

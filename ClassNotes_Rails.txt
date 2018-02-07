@@ -23,11 +23,12 @@ app.about_url
 .git file, what will do it to use of the parente structure
 >>rails new will create git repo files
 
-1) rails new project_name
-   rails new project_name -T -d postgresql  (if need db - use Postgres as our database instead of the default one: SQLite)
+1) rails new QuizIII -T -d postgresql
+    (if need db - use Postgres as our database instead of the default one: SQLite)
 2) check if it has a own git repo, if not, delete .git
 5) rails g controller question --no-helper --no-assets
 3) rails g model product title body:text
+   rails g model auction title details:text ends_on:date reserve_price:float
 4) rails db:create and
    rails db:migrate
 6) create actions at controller(s)
@@ -147,6 +148,7 @@ q2 = Question.last
 
 >>>> rails g model answer body:text question:references
       ---> creates dependence between registers
+      rails g model bid bid:float auction:references
 
 pry(main)> a = Answer.new(body: 'Carrot', question: Question.all.sample)
 Question Load (29.6ms)  SELECT "questions".* FROM "questions"
@@ -281,7 +283,9 @@ from /home/wellington/.rvm/gems/ruby-2.4.2/gems/activerecord-5.1.4/lib/active_re
 
 
 
->>>>> Authentication ----> it will generate a create_users file
+>>>>> Authentication
+it will generate a create_users file
+
 1)    rails g model user first_name last_name email password_digest
       Running via Spring preloader in process 28318
             invoke  active_record
@@ -346,6 +350,7 @@ https://regexone.com/
 
 12) create session
     rails g controller sessions --no-assets --no-helper
+    rails g controller  Api::V1::sessions --no--assets --no-helper
 Running via Spring preloader in process 434
   create  app/controllers/sessions_controller.rb
   invoke  erb
@@ -372,6 +377,7 @@ Running via Spring preloader in process 434
                 invoke  active_record
                 create    db/migrate/20171212194928_add_user_to_answers.rb
 17) migration file to edit
+    , index: true
 18) rails db:migrate
 19) add belongs_to :user for models
     * for user model, insert has_many
@@ -474,7 +480,7 @@ pry(main)> u = User.first
   (4.6ms)  COMMIT
 => true
 
->>>>>  Bootstrap  ----> it's important when updating, Gemfile will it for us
+>>>>>  Bootstrap  ----> it's important when updating, Gemfile will do it for us
 http://sass-lang.com/
 https://github.com/twbs/bootstrap-rubygem
 
@@ -497,7 +503,6 @@ https://github.com/twbs/bootstrap-rubygem
 
 
 >>>>> Heroku
-
 *
 * sudo add-apt-repository "deb https://cli-assets.heroku.com/branches/stable/apt ./"
 * curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -
@@ -519,9 +524,6 @@ https://github.com/twbs/bootstrap-rubygem
 https://wellamzn.herokuapp.com/
 https://git.heroku.com/wellamzn.git
 
-
-
-
 >>>>> many to many
 
 1) rails g model like question:references user:references
@@ -540,7 +542,6 @@ https://git.heroku.com/wellamzn.git
 12) added line application.html
 13) chanded index in question controller
 14) changed first line at index.html
-
 
 
 [30] pry(main)> history
@@ -573,9 +574,6 @@ https://git.heroku.com/wellamzn.git
 27: u.likes.create(question: q3)
 28: u.likes.delete(q3)
 29: u.likes.destroy_all
-
-
-
 
 
 >>>>>>>>  creating Stars
@@ -624,10 +622,6 @@ https://git.heroku.com/wellamzn.git
 7) question controller authorize user
 
 
-
-
-
-
 [8] pry(main)> history
 1: tags.map {|tag| tag.name}
 2: tags = TAg.all
@@ -636,8 +630,6 @@ https://git.heroku.com/wellamzn.git
 5: tags.map {|tag| tag.name + tag.id.to_s }
 6: tags.map(&:name)
 7: tags.pluck(:name).join(', ')
-
-
 
 
 >>>>> mailer
@@ -705,7 +697,8 @@ turned on
 2) you can call the page using the correspondent extension (html, json, xml)
 
 *** doing a separeted API
-1) rails g controller  Api::V1::Questions --no--assets --no-helper
+1) rails g controller  Api::V1::Auctions --no--assets --no-helper
+   rails g controller  Api::V1::Bids --no--assets --no-helper
 2) routes creating namespace
    added code for default (JSON in this case)
 3) added action index in question controller in V1
@@ -723,6 +716,7 @@ turned on
     gem 'active_model_serializers'
     bundle
 11) rails g serializer question title:string body:text
+    rails g serializer auction title:string body:text
     added show action to question_controller api
     created tab in postman for Show
     tested in postman using a question: http://localhost:3000/api/v1/questions/302
@@ -734,11 +728,11 @@ turned on
 13) added function create in question_controller api
 14) disable token with:
     rails g controller Api::Application --no-assets --no-helper --skip-template-engine
-15) added < Api to question_controller Api
+15) added < Api:: to question_controller Api
 16) added text for ApplicationController Api
 17) rails g migration add_api_key_to_user api_key:string
-18) included line in the file generated with index
-    rails db:migrate
+    included line in the file generated with index
+18) rails db:migrate
 19) created a private method generate api key
     loop to check if there's no one else using the same key
 20) created method generate_api_key in user model
@@ -747,11 +741,11 @@ turned on
     current_user
     api_key
 22) added line in show of QuestionsController api
-23) added
 
-
-
-
+**********************************************
+* jwt (token): described in the file:
+* /home/wellington/CodeCore/Awesome_Answer/ClassNotes_Rails.txt
+**********************************************
 
 [1] pry(main)> SecureRAndom
 NameError: uninitialized constant SecureRAndom
@@ -1029,6 +1023,7 @@ https://reactstrap.github.io/
 
 
 18) rails g controller client --no-assets --no-helper index
+    rails g controller Api::V1::client --no--assets --no-helper index
 19) edited routes
 20) created file for template in view/client folder (index.html)
 21) added client.html in layouts view folder
@@ -1047,10 +1042,90 @@ d = document.querySelector('#Navigation')
 
 
 
+>>>>>>>>>>>  Publishing
+
+1) gem 'aasm'
+   bundle
+2) rails g migration add_aasm_state_to_questions aasm_state
+3) added lines to question.rb:
+   include AASM
+   events for publish, lock....
+   given q.publishe? in Rails c
+4) added viewable in line 20 from question_controller
+5) rails g controller publishings --no-helpers --no-assets
+6) created route for publishings
+   resources :publishings, only: :create
+7) filled out PublishingsController
+8) added line (40, above like) in show.html question
+9) created line in ability.rb
+10) rails g controller my_questions
+11) createad line in routes for my_questions
+12) coded my_questions controller
+13) created index html in my_questions view
+14) shortcut for it in navigation bar
 
 
+>>>>>>>  Active Admin
+https://activeadmin.info/
+
+1) gem 'activeadmin'
+   bundle
+2) rails generate active_admin:install
+   requires devise (not advisable to use, but in this case, necessary)
+3) gem 'devise'
+4) rails db:migrate
+5) rails c
+   AdminUser.create(email: 'js@winterfell.gov', password: 'supersecret')
+6) rails generate active_admin:resource question
+   rails generate active_admin:resource answer
+   rails generate active_admin:resource user
+7) tested on browser (need login the first time)
+   http://localhost:3000/admin/login
+8) uncommented out line in question.rb inside app/admin
+9) added line to applicaton.scss
+   *= stub active_admin
+
+>>>>  SASS
+rails accept it by default
+it has concept of varibles and much more
+
+1) added line to test color on application.scss
+2)
+3)
+4)
+5)
 
 
+>>>>>
+
+1) gem 'omniauth-github'
+   bundle
+2) created /config/initializers/omniauth.rb
+3) created OAuth on github
+   settings/Developer settings/OAuth Apps
+   New OAuth App
+    https://github.com/settings/applications/664995
+4) put key and password on app_keys
+5) added in routes:
+  get "/auth/github", as: :sign_in_with_github
+  get "/auth/:provider/callback", to: "callback#index"
+6) added line in Navigation.jsx for signing in github
+   together sign in
+7) rails g controller callbacks index  --no-assets --no-helper --skip-template-engine
+8) filled out callbacks_controller
+    def index
+      omniauth_data = request.env['omniauth.data']
+      render json: omniauth_data
+    end
+9) rails g migration add_oauth_fields_to_user uid provider oauth_token oauth_secret oauth_raw_data:text
+   added line for index :users
+   rails db:migrate
+10) added method on user model self.create.from_oauth and def from_oauth?
+    changed validates for :email
+    included line:   serialize :oauth_raw_data
+11) added code for user in callbacks
+12) inserted line for method self.find in user model
+13)
 
 
 

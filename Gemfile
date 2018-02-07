@@ -47,6 +47,11 @@ gem 'fog'
 gem 'mini_magick'
 gem 'jwt'
 gem 'webpacker', '~> 3.0.0'
+gem 'omniauth-github'
+gem 'aasm'
+gem 'devise'
+gem 'activeadmin'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

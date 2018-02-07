@@ -50,7 +50,7 @@ class QuestionShowPage extends Component {
 
     componentDidMount () {
       const {params} = this.props.match;
-      console.log(params);
+      // console.log(params);
 
       Question
         .get(params.id)
