@@ -29,6 +29,7 @@ app.about_url
 5) rails g controller question --no-helper --no-assets
 3) rails g model product title body:text
    rails g model auction title details:text ends_on:date reserve_price:float
+   rails g model transaction title description:text date:date value:float
 4) rails db:create and
    rails db:migrate
 6) create actions at controller(s)
@@ -316,6 +317,7 @@ it will generate a create_users file
 5) bundle ---> to apply the edition at Gemfile
 6) Call has_secure_password in User Model
    we call this method in the User model
+
    pry(main)> u1 = User.new first_name: 'jane', email: 'j@j.ca'
 +----+------------+--------+---------------+------------+------------+
 | id | first_name | email  | password_d... | created_at | updated_at |
@@ -523,6 +525,7 @@ https://github.com/twbs/bootstrap-rubygem
 
 https://wellamzn.herokuapp.com/
 https://git.heroku.com/wellamzn.git
+
 
 >>>>> many to many
 
@@ -1127,6 +1130,92 @@ it has concept of varibles and much more
 12) inserted line for method self.find in user model
 13) made change in self.create_from_oauth for consider case with nil for name
     changed validates for first_name and last_name
+
+
+>>>> gem for github
+http://octokit.github.io/
+https://developer.github.com/v3/
+https://gist.github.com/
+
+1) gem 'octokit', '~> 4.0'
+   bundle
+2) added scope in omniauth.rb to give grant write where we want
+   https://developer.github.com/apps/building-oauth-apps/scopes-for-oauth-apps/
+3) question_controller added :publish_gist in find_question
+   method publish_gist
+4) link option for gist in show question html
+5) added line in Routes for posting :publish_gist inside :questions
+6)
+
+Question.all.each { |q| q.update(aasm_state: :published) }
+
+Rails c
+  client = Octokit::Client.new(access_token: User.last.oauth_token)
+  client.user (to see the result of the line above)
+  client.list_repos  (to see the history of repos)
+  client.create_gist(description: 'test', public: true, files: { "test.txt" => {content: "Hello World!"}})
+https://octokit.github.io/octokit.rb/Octokit/Client/Gists.html
+
+User.last.destroy
+
+
+>>>>> Stripe
+https://dashboard.stripe.com/
+https://stripe.com/docs/testing
+https://stripe.com/docs/api/ruby
+https://stripe.com/docs/api/ruby#balance
+https://stripe.com/docs/api/ruby#create_charge
+in the browser, inside question, click on the owner of question
+
+1) gem 'rails-erd'
+   bundle
+2) sudo apt install graphviz
+3) rails erd
+   needed to comment out dashboard_controller (conflicted with ERD)
+4) rails g model gift amount:money sender_id:integer receiver_id:integer stripe_txn_id
+   rails db:migrate
+   made some tests on rails c (see below)
+5) rails g controller gifts --no-assets --no-helper
+6) created resources for gift inside users
+7) filled out codes for GiftsController
+8) created file in views/gifts new html
+   added code for form
+9) added code for create gift in the controller
+10) added validates in user model for amount of gift
+11) rails g controller payments --no-helper --no-assets
+12) created file for payments view (new.html)
+13) added code in GiftsController
+    inside create method
+14) added  app_keys
+    taken keys on the stripe website
+    https://dashboard.stripe.com/account/apikeys
+15) added line to application html to set up publish key:
+    <script>
+      const stripe = Stripe('pk_test_Ir3Dz5nsnoiWv8lrKIclpNvF');
+    </script>
+16) created file inside javascript folder: payments.js
+17) added text in new html in payment view from quick start:
+    https://stripe.com/docs/stripe-js/elements/quickstart
+18) edited new.html because a problem
+    taken off form class from div paragraph
+19) added code for payments.js related to submit
+20) edited new html Payment html
+21) gem 'stripe'
+    bundle
+22) created new file setup_stripe.rb inside config/initializer
+23) added code in create method inside PaymentsController
+24)
+
+
+
+
+
+
+
+1: u = User.last
+2: u1 = User.find 135
+3: Gift.create(sender: u, receiver: u1, amount: 135)
+
 
 
 

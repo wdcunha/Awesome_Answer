@@ -54,8 +54,38 @@ questions.each do |question|
       body: Faker::TheFreshPrinceOfBelAir.quote,
       question: question,
       user: users.sample
+      aasm_state: [:draft, :published].sample
     )
   end
+
+  questions = Question.all
+
+  puts Cowsay.say("Created #{questions.count} questions", :ghostbusters)
+
+  questions.each do |question|
+    rand(0..5).times.each do
+      Answer.create(
+        body: Faker::TheFreshPrinceOfBelAir.quote,
+        question: question,
+        user: users.sample,
+      )
+    end
+  end
+
+
+  answers = Answer.all
+
+  puts Cowsay.say("Create #{answers.count} answers", :moose)
+
+  puts "Login as admin with #{super_user.email} and password of '#{PASSWORD}'!"
+
+
+
+
+
+
+  # bump
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 end
 
 

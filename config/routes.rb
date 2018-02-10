@@ -53,12 +53,19 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
 
   # User related routes
-   resources :users, only: [:new, :create, :show, :index]
+  resources :users, shallow: true, only: [:new, :create, :show, :index] do
+    resources :gifts, only: [:new, :create] do
+      resources :payments, only: [:new, :create]
+    end
+  end
+
 
   # Question related routes
 
 
   resources :questions  do
+    # POST /questions/:id/publish_gist
+    post :publish_gist, on: :member
     # TODO: idaelly we should make the answers as shallow: true which requires
     # some changes in the views and possibly controllers
     resources :answers, only: [:create, :destroy]

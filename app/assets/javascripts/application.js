@@ -14,9 +14,7 @@
 //= require chosen-jquery
 //= require popper
 //= require bootstrap
-//= require rails-ujs
 //= require underscore
 //= require gmaps/google
-//= require turbolinks
 //= require cocoon
 //= require_tree .

@@ -1,0 +1,304 @@
+[1m[1;34mActiveSupport::ToJsonWithActiveSupportEncoder#methods[0m[0m: to_json
+[1m[1;34mOctokit::Authentication#methods[0m[0m: 
+  application_authenticated?  token_authenticated?
+  basic_authenticated?        user_authenticated? 
+  bearer_authenticated?     
+[1m[1;34mOctokit::Configurable#methods[0m[0m: 
+  access_token         default_media_type=           per_page     
+  api_endpoint         login                         per_page=    
+  api_endpoint=        management_console_endpoint   proxy        
+  auto_paginate        management_console_endpoint=  proxy=       
+  auto_paginate=       management_console_password=  reset!       
+  bearer_token         middleware                    same_options?
+  client_id            middleware=                   setup        
+  client_secret        netrc                         user_agent   
+  configure            netrc=                        user_agent=  
+  connection_options   netrc?                        web_endpoint 
+  connection_options=  netrc_file                    web_endpoint=
+  default_media_type   netrc_file=                 
+[1m[1;34mOctokit::Connection#methods[0m[0m: 
+  agent   get   last_response  patch  put 
+  delete  head  paginate       post   root
+[1m[1;34mOctokit::Preview#methods[0m[0m: ensure_api_media_type  warn_preview
+[1m[1;34mOctokit::Warnable#methods[0m[0m: octokit_warn
+[1m[1;34mOctokit::Client::Authorizations#methods[0m[0m: 
+  authorization                        
+  authorizations                       
+  authorize_url                        
+  check_application_authorization      
+  create_authorization                 
+  delete_application_authorization     
+  delete_authorization                 
+  reset_application_authorization      
+  revoke_all_application_authorizations
+  revoke_application_authorization     
+  scopes                               
+  update_authorization                 
+[1m[1;34mOctokit::Client::Commits#methods[0m[0m: 
+  commit          commits_between  compare        list_commits
+  commits         commits_on       create_commit  merge       
+  commits_before  commits_since    git_commit   
+[1m[1;34mOctokit::Client::CommitComments#methods[0m[0m: 
+  commit_comment   create_commit_comment  list_commit_comments 
+  commit_comments  delete_commit_comment  update_commit_comment
+[1m[1;34mOctokit::Client::Contents#methods[0m[0m: 
+  add_content   contents         delete_contents  update_content 
+  add_contents  create_content   readme           update_contents
+  archive_link  create_contents  remove_content 
+  content       delete_content   remove_contents
+[1m[1;34mOctokit::Client::Deployments#methods[0m[0m: 
+  create_deployment         deployments             
+  create_deployment_status  list_deployment_statuses
+  deployment_statuses       list_deployments        
+[1m[1;34mOctokit::Client::Downloads#methods[0m[0m: 
+  delete_download  download  downloads  list_downloads
+[1m[1;34mOctokit::Client::Emojis#methods[0m[0m: emojis
+[1m[1;34mOctokit::Client::Events#methods[0m[0m: 
+  issue_event                 repo_issue_events        
+  issue_events                repository_events        
+  organization_events         repository_issue_events  
+  organization_public_events  repository_network_events
+  public_events               user_events              
+  received_events             user_public_events       
+  received_public_events    
+[1m[1;34mOctokit::Client::Feeds#methods[0m[0m: feed  feeds
+[1m[1;34mOctokit::Client::Gists#methods[0m[0m: 
+  create_gist          gist_comment   public_gists       
+  create_gist_comment  gist_comments  star_gist          
+  delete_gist          gist_commits   starred_gists      
+  delete_gist_comment  gist_forks     unstar_gist        
+  edit_gist            gist_starred?  update_gist_comment
+  fork_gist            gists        
+  gist                 list_gists   
+[1m[1;34mOctokit::Client::Gitignore#methods[0m[0m: 
+  gitignore_template  gitignore_templates
+[1m[1;34mOctokit::Client::Hooks#methods[0m[0m: 
+  available_hooks  hook            parse_payload    test_hook      
+  create_hook      hooks           ping_hook        update_org_hook
+  create_org_hook  list_org_hooks  ping_org_hook  
+  edit_hook        org_hook        remove_hook    
+  edit_org_hook    org_hooks       remove_org_hook
+[1m[1;34mOctokit::Client::Apps#methods[0m[0m: 
+  add_repo_to_installation                       
+  add_repository_to_app_installation             
+  add_repository_to_integration_installation     
+  create_app_installation_access_token           
+  create_installation_access_token               
+  create_integration_installation_access_token   
+  find_app_installations                         
+  find_installation_repositories_for_user        
+  find_installations                             
+  find_integration_installations                 
+  find_user_installations                        
+  installation                                   
+  list_app_installation_repositories             
+  list_installation_repos                        
+  list_integration_installation_repositories     
+  remove_repo_from_installation                  
+  remove_repository_from_app_installation        
+  remove_repository_from_integration_installation
+[1m[1;34mOctokit::Client::Issues#methods[0m[0m: 
+  add_assignees   issue           issues_comments  reopen_issue  
+  add_comment     issue_comment   list_issues      unlock_issue  
+  close_issue     issue_comments  lock_issue       update_comment
+  create_issue    issue_timeline  open_issue       update_issue  
+  delete_comment  issues          org_issues       user_issues   
+[1m[1;34mOctokit::Client::Labels#methods[0m[0m: 
+  add_label               labels                remove_label      
+  add_labels_to_an_issue  labels_for_issue      replace_all_labels
+  delete_label!           labels_for_milestone  update_label      
+  label                   remove_all_labels   
+[1m[1;34mOctokit::Client::LegacySearch#methods[0m[0m: 
+  legacy_search_issues        legacy_search_users
+  legacy_search_repositories
+[1m[1;34mOctokit::Client::Licenses#methods[0m[0m: 
+  license  licenses  repository_license_contents
+[1m[1;34mOctokit::Client::Meta#methods[0m[0m: github_meta  meta
+[1m[1;34mOctokit::Client::Markdown#methods[0m[0m: markdown
+[1m[1;34mOctokit::Client::Marketplace#methods[0m[0m: 
+  list_accounts_for_plan  marketplace_purchases
+  list_plans              plan_for_account     
+[1m[1;34mOctokit::Client::Milestones#methods[0m[0m: 
+  create_milestone  edit_milestone   milestone   update_milestone
+  delete_milestone  list_milestones  milestones
+[1m[1;34mOctokit::Client::Notifications#methods[0m[0m: 
+  delete_thread_subscription             repo_notifications        
+  mark_notifications_as_read             repository_notifications  
+  mark_repo_notifications_as_read        thread_notifications      
+  mark_repository_notifications_as_read  thread_subscription       
+  mark_thread_as_read                    update_thread_subscription
+  notifications                        
+[1m[1;34mOctokit::Client::Objects#methods[0m[0m: 
+  blob  create_blob  create_tag  create_tree  tag  tree
+[1m[1;34mOctokit::Client::Organizations#methods[0m[0m: 
+  add_team_member                  organization_public_member?   
+  add_team_membership              organization_public_members   
+  add_team_repo                    organization_repositories     
+  add_team_repository              organization_teams            
+  all_organizations                organizations                 
+  all_orgs                         orgs                          
+  child_teams                      outside_collaborators         
+  conceal_membership               publicize_membership          
+  convert_to_outside_collaborator  remove_org_member             
+  create_team                      remove_organization_member    
+  delete_migration_archive         remove_organization_membership
+  delete_team                      remove_outside_collaborator   
+  list_organizations               remove_team_member            
+  list_orgs                        remove_team_membership        
+  migration_archive_url            remove_team_repo              
+  migration_status                 remove_team_repository        
+  migrations                       start_migration               
+  org                              team                          
+  org_invitations                  team_invitations              
+  org_member?                      team_member?                  
+  org_members                      team_members                  
+  org_membership                   team_membership               
+  org_memberships                  team_repo?                    
+  org_public_member?               team_repos                    
+  org_public_members               team_repositories             
+  org_repos                        team_repository?              
+  org_repositories                 unlock_repository             
+  org_teams                        unpublicize_membership        
+  organization                     update_org                    
+  organization_invitations         update_org_membership         
+  organization_member?             update_organization           
+  organization_members             update_organization_membership
+  organization_membership          update_team                   
+  organization_memberships         user_teams                    
+[1m[1;34mOctokit::Client::Pages#methods[0m[0m: 
+  latest_pages_build  pages        pages_builds      
+  list_pages_builds   pages_build  request_page_build
+[1m[1;34mOctokit::Client::Projects#methods[0m[0m: 
+  column_cards                 org_projects         
+  create_org_project           organization_projects
+  create_organization_project  project              
+  create_project               project_card         
+  create_project_card          project_column       
+  create_project_column        project_columns      
+  delete_project               projects             
+  delete_project_card          update_project       
+  delete_project_column        update_project_card  
+  move_project_card            update_project_column
+  move_project_column        
+[1m[1;34mOctokit::Client::PubSubHubbub#methods[0m[0m: 
+  subscribe               unsubscribe             
+  subscribe_service_hook  unsubscribe_service_hook
+[1m[1;34mOctokit::Client::PullRequests#methods[0m[0m: 
+  close_pull_request                 pull_merged?               
+  create_pull_comment                pull_request               
+  create_pull_reply                  pull_request_comment       
+  create_pull_request                pull_request_comments      
+  create_pull_request_comment        pull_request_commits       
+  create_pull_request_comment_reply  pull_request_files         
+  create_pull_request_for_issue      pull_request_merged?       
+  create_review_reply                pull_requests              
+  create_view_comment                pull_requests_comments     
+  delete_pull_comment                pulls                      
+  delete_pull_request_comment        pulls_comments             
+  delete_review_comment              review_comment             
+  merge_pull_request                 review_comments            
+  pull                               reviews_comments           
+  pull_comment                       update_pull_comment        
+  pull_comments                      update_pull_request        
+  pull_commits                       update_pull_request_comment
+  pull_files                         update_review_comment      
+[1m[1;34mOctokit::Client::RateLimit#methods[0m[0m: 
+  rate_limit   rate_limit_remaining   ratelimit   ratelimit_remaining 
+  rate_limit!  rate_limit_remaining!  ratelimit!  ratelimit_remaining!
+[1m[1;34mOctokit::Client::Reactions#methods[0m[0m: 
+  commit_comment_reactions                   
+  create_commit_comment_reaction             
+  create_issue_comment_reaction              
+  create_issue_reaction                      
+  create_pull_request_review_comment_reaction
+  delete_reaction                            
+  issue_comment_reactions                    
+  issue_reactions                            
+  pull_request_review_comment_reactions      
+[1m[1;34mOctokit::Client::Refs#methods[0m[0m: 
+  create_ref        delete_reference  reference      update_ref      
+  create_reference  list_references   references     update_reference
+  delete_branch     list_refs         refs         
+  delete_ref        ref               update_branch
+[1m[1;34mOctokit::Client::Releases#methods[0m[0m: 
+  create_release        latest_release  release_for_tag     
+  delete_release        list_releases   releases            
+  delete_release_asset  release         update_release      
+  edit_release          release_asset   update_release_asset
+  edit_release_asset    release_assets  upload_asset        
+[1m[1;34mOctokit::Client::Repositories#methods[0m[0m: 
+  add_collab           edit                 repository          
+  add_collaborator     edit_deploy_key      repository?         
+  add_deploy_key       edit_repository      repository_assignees
+  all_repositories     fork                 repository_teams    
+  branch               forks                set_private         
+  branch_protection    get_branch           set_public          
+  branches             languages            star                
+  check_assignee       list_deploy_keys     stargazers          
+  collaborator?        list_repos           subscribers         
+  collaborators        list_repositories    subscription        
+  collabs              network              tags                
+  contribs             permission_level     teams               
+  contributors         protect_branch       unprotect_branch    
+  create               remove_collab        unstar              
+  create_repo          remove_collaborator  unwatch             
+  create_repository    remove_deploy_key    update              
+  delete_repo          repo                 update_deploy_key   
+  delete_repository    repo_assignees       update_repository   
+  delete_subscription  repo_teams           update_subscription 
+  deploy_key           repos                watch               
+  deploy_keys          repositories         watchers            
+[1m[1;34mOctokit::Client::RepositoryInvitations#methods[0m[0m: 
+  accept_repo_invitation         invite_user_to_repository   
+  accept_repository_invitation   repo_invitations            
+  decline_invitation             repository_invitations      
+  decline_repository_invitation  update_repo_invitation      
+  delete_repo_invitation         update_repository_invitation
+  delete_repository_invitation   user_repo_invitations       
+  invite_user_to_repo            user_repository_invitations 
+[1m[1;34mOctokit::Client::Reviews#methods[0m[0m: 
+  create_pull_request_review    pull_request_review_requests
+  delete_pull_request_review    pull_request_reviews        
+  dismiss_pull_request_review   request_pull_request_review 
+  pull_request_review           submit_pull_request_review  
+  pull_request_review_comments
+[1m[1;34mOctokit::Client::Say#methods[0m[0m: octocat  say
+[1m[1;34mOctokit::Client::Search#methods[0m[0m: 
+  search_code    search_repos         search_users
+  search_issues  search_repositories
+[1m[1;34mOctokit::Client::ServiceStatus#methods[0m[0m: 
+  github_status  github_status_last_message  github_status_messages
+[1m[1;34mOctokit::Client::SourceImport#methods[0m[0m: 
+  cancel_source_import              source_import_large_files
+  map_source_import_commit_author   source_import_progress   
+  set_source_import_lfs_preference  start_source_import      
+  source_import_commit_authors      update_source_import     
+[1m[1;34mOctokit::Client::Stats#methods[0m[0m: 
+  code_frequency_stats   contributors_stats   punch_card_stats
+  commit_activity_stats  participation_stats
+  contributor_stats      punch_card         
+[1m[1;34mOctokit::Client::Statuses#methods[0m[0m: 
+  combined_status  create_status  list_statuses  status  statuses
+[1m[1;34mOctokit::Client::Traffic#methods[0m[0m: 
+  clones  top_paths  top_referrers  views
+[1m[1;34mOctokit::Client::Users#methods[0m[0m: 
+  add_email                follows?       unfollow            
+  add_key                  key            update_key          
+  all_users                keys           update_user         
+  emails                   remove_email   user                
+  exchange_code_for_token  remove_key     user_keys           
+  follow                   starred        validate_credentials
+  followers                starred?       watched             
+  following                subscriptions
+[1m[1;34mOctokit::Client#methods[0m[0m: 
+  access_token=  client_id=                inspect  
+  as_app         client_secret=            login=   
+  bearer_token=  client_without_redirects  password=
+[1m[1;34minstance variables[0m[0m: 
+  [0;34m@access_token[0m   [0;34m@connection_options[0m           [0;34m@netrc[0m       
+  [0;34m@agent[0m          [0;34m@default_media_type[0m           [0;34m@netrc_file[0m  
+  [0;34m@api_endpoint[0m   [0;34m@last_response[0m                [0;34m@password[0m    
+  [0;34m@auto_paginate[0m  [0;34m@login[0m                        [0;34m@per_page[0m    
+  [0;34m@bearer_token[0m   [0;34m@management_console_endpoint[0m  [0;34m@proxy[0m       
+  [0;34m@client_id[0m      [0;34m@management_console_password[0m  [0;34m@user_agent[0m  
+  [0;34m@client_secret[0m  [0;34m@middleware[0m                   [0;34m@web_endpoint[0m
