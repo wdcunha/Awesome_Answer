@@ -1,3 +1,6 @@
+gem environment (see paths of which is installed)
+bundle show <gemName>
+gem list
 
 
 gem install rails --nod-rdoc --no-ri
@@ -29,7 +32,6 @@ app.about_url
 5) rails g controller question --no-helper --no-assets
 3) rails g model product title body:text
    rails g model auction title details:text ends_on:date reserve_price:float
-   rails g model transaction title description:text date:date value:float
 4) rails db:create and
    rails db:migrate
 6) create actions at controller(s)
